@@ -465,6 +465,8 @@
 
 /* RESPONSIVE */
 @media (max-width: 1024px) {
+  .main-title { text-align: center; }
+  .cta-btn { text-align: center; }
   .hero-main-content { flex-direction: column; gap: 2rem; }
   .hero-footer-content { margin-right: 0; }
   .why-us-grid, .featured-grid { 
