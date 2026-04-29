@@ -206,10 +206,6 @@ const totalItems = computed(() => {
   cursor: pointer;
 }
 
-.mobile-toggle:hover {
-  background-color: var(--black);
-}
-
 /* RESPONSIVE REPAIR */
 @media (max-width: 992px) {
   .navbar {
