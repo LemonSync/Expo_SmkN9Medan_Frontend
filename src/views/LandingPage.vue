@@ -68,7 +68,7 @@
   
       <section class="featured">
         <div class="section-title border-bottom bg-white">
-          <h2 class="text-small">MENU_UNGGULAN_[-]</h2>
+          <h2 class="text-small">MENU_UNGGULAN</h2>
         </div>
 
         <div class="featured-grid bg-white">
