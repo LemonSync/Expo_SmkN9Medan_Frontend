@@ -246,6 +246,7 @@ import BrutalFooter from '../components/BrutalFooter.vue';
 }
 
 .main-title {
+  text-align: center;
   font-size: clamp(2rem, 5vw, 4.5rem);
   font-weight: 900;
   line-height: 1;
@@ -275,6 +276,7 @@ import BrutalFooter from '../components/BrutalFooter.vue';
 }
 
 .cta-btn {
+  text-align: center;
   display: inline-block;
   padding: 1.2rem 2.5rem;
   border: var(--line);
