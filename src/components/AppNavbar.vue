@@ -13,12 +13,12 @@
       <router-link to="/menu" class="nav-item" @click="isMenuOpen = false">
         <span class="nav-text">MENU_KATALOG</span>
       </router-link>
-      
+
       <div class="cart-box">
         <router-link to="/cart" class="nav-item cart-link" @click="isMenuOpen = false">
           <div class="cart-wrapper">
-             <span class="cart-label">CART</span>
-             <span class="cart-badge text-lettuce">{{ totalItems }}</span>
+            <span class="cart-label">CART</span>
+            <span class="cart-badge text-lettuce">{{ totalItems }}</span>
           </div>
         </router-link>
       </div>
@@ -54,13 +54,14 @@ const totalItems = computed(() => {
   --lettuce: #00FF47;
   --soda: #0051FF;
   --border-width: 5px;
-  
+
   width: 100%;
   top: 0;
   left: 0;
   margin: 0;
   display: flex;
-  height: 90px; /* Sedikit lebih tinggi agar lebih megah */
+  height: 90px;
+  /* Sedikit lebih tinggi agar lebih megah */
   background-color: var(--white);
   border-bottom: var(--border-width) solid var(--black);
   position: sticky;
@@ -167,7 +168,9 @@ const totalItems = computed(() => {
   background-color: white;
 }
 
-.text-lettuce { color: var(--lettuce); }
+.text-lettuce {
+  color: var(--lettuce);
+}
 
 /* MOBILE TOGGLE */
 .mobile-toggle {
@@ -188,27 +191,35 @@ const totalItems = computed(() => {
 /* RESPONSIVE */
 /* RESPONSIVE REPAIR */
 @media (max-width: 992px) {
-  .navbar { height: 70px; }
-  .logo { font-size: 1.5rem; }
-  
+  .navbar {
+    height: 70px;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+  }
+
   .mobile-toggle {
     display: block;
     margin-left: auto;
   }
 
   .nav-links {
-    display: flex; /* Ubah dari none ke flex */
+    display: flex;
+    /* Ubah dari none ke flex */
     flex-direction: column;
     position: fixed;
-    top: 70px; /* Sesuai tinggi navbar mobile */
+    top: 70px;
+    /* Sesuai tinggi navbar mobile */
     left: 0;
     width: 100%;
     background-color: var(--white);
     border-bottom: var(--border-width) solid var(--black);
-    
+
     /* Sembunyikan secara default menggunakan transform agar bisa dianimasi */
     transform: translateY(-150%);
-    transition: transform 0.4s ease; /* Efek patah-patah khas brutalist */
+    transition: transform 0.4s ease;
+    /* Efek patah-patah khas brutalist */
     z-index: -1;
   }
 
