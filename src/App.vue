@@ -1,8 +1,6 @@
 <template>
   <div class="brutal-app">
-    <div class="navbar">
     <AppNavbar />
-  </div>
 
     <main class="main-content">
       <router-view v-slot="{ Component }">
@@ -35,10 +33,6 @@ html, body {
 .brutal-app {
   display: flex;
   flex-direction: column;
-}
-
-.navbar {
-  z-index: 1000;
 }
 
 .main-content {
