@@ -1,369 +1,135 @@
-App.vue
+buatkan bagian populer menu mirip dengan FoodCard
 
-<style>
-/* CSS Global di App.vue ini mengatur transisi 
-   antar halaman agar tetap terasa 'Brutal'
-*/
-
-.brutal-app {
-  display: flex;
-  flex-direction: column;
-}
-
-.main-content {
-  background-image: url('./assets/cafe.jpg');
-  flex-grow: 1;
-}
-
-/* TRANSISI ANTAR HALAMAN 
-   Kita tidak pakai fade halus, kita pakai efek 'patah' 
-   atau langsung muncul untuk kesan brutal.
-*/
-.page-swap-enter-active {
-  animation: brutal-in 0.2s ease;
-}
-
-.page-swap-leave-active {
-  animation: brutal-out 0.1s ease;
-}
-
-@keyframes brutal-in {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes brutal-out {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
-/* Custom Scrollbar untuk Browser (Industrial Look) */
-::-webkit-scrollbar {
-  width: 16px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--black);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--mustard);
-  border: 4px solid var(--black);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--lettuce);
-}
-</style>
-
-
-
-MenuPage.vue
-<style scoped>
-
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeRight {
-  from {
-    opacity: 0.5;
-    transform: translateX(-100px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes fadeLeft {
-  from {
-    opacity: 0.5;
-    transform: translateX(100px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.satuSatu {
-  opacity: 0;
-  animation: fadeRight 0.5s ease forwards;
-}
-
-.menu-page {
-  /* Variabel Palet Utama */
-  --black: #000000;
-  --white: #FFFFFF;
-  --mustard: #FFDB00;
-  --ketchup: #FF0000;
-  --soda: #0051FF;
-  --line: 5px solid var(--black);
-  animation: fadeIn 0.1s ease;
-  min-height: 100vh;
-  background-color: var(--white);
-  font-family: 'Space Grotesk', sans-serif;
-  position: relative;
-  z-index: 1;
-  overflow-x: hidden;
-}
-
-/* 1. BACKGROUND IMAGE (WATERMARK STYLE) */
-.menu-page::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url('../assets/cafe.jpg'); /* Ganti dengan path gambarmu */
-  opacity: 50%;
-  z-index: -1;
-}
-
-/* 2. AKSESORIS: CORNER ACCENT */
-.corner-accent {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 80px 80px 0 0;
-  border-color: var(--mustard) transparent transparent transparent;
-  z-index: 100;
-  pointer-events: none;
-}
-
-.corner-accent::after {
-  content: "HOT";
-  position: absolute;
-  top: -70px;
-  left: 10px;
-  font-weight: 900;
-  font-size: 0.8rem;
-  color: var(--black);
-  transform: rotate(-45deg);
-}
-
-/* 3. HEADER AREA */
-.menu-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 3rem 4rem;
-  border-bottom: var(--line);
+<template>
+    <div class="landing-page">
+      <section class="hero">
+        <div class="hero-wrapper">
+          <div class="badge-container">
+            <div class="badge bg-black text-white">SMK_BISA | SMK_HEBAT</div>
+          </div>
   
-  /* Tambahkan ini */
-  backdrop-filter: blur(1px); 
-  -webkit-backdrop-filter: blur(10px); /* Dukungan untuk Safari */
-  background-color: rgba(255, 255, 255, 0.5); /* Warna transparan agar efek blur terlihat */
-  position: relative;
-  z-index: 2;
-}
+          <div class="hero-main-content">
+            <h1 class="main-title left">SELAMAT_<br /> DATANG_DI</h1>
+  
+            <div class="hero-visual-center bg-soda">
+              <div class="visual-box bg-white">
+                <img src="../assets/logo.jpg" class="full-img" alt="Logo SMKN9">
+              </div>
+            </div>
+  
+            <h1 class="main-title right">
+              <span class="outline-text">SMKN9_SHOP</span>
+            </h1>
+          </div>
+  
+          <div class="hero-footer-content">
+            <p class="description">
+              Kami menyediakan menu makanan dan minuman yang sehat bagi pembeli yang datang ke toko kami.
+            </p>
+            <router-link to="/menu" class="cta-btn bg-mustard">
+              ORDER_SEKARANG [->]
+            </router-link>
+          </div>
+        </div>
+      </section>
+  
+      <section class="why-us-section">
+        <div class="section-title border-bottom bg-white">
+          <h2 class="text-small">KENAPA_KAMI_?</h2>
+        </div>
+        
+        <div class="why-us-grid bg-white">
+          <div class="why-card card-rotate-left">
+            <div class="why-header bg-black text-white">01 / LOKAL</div>
+            <div class="why-content">
+              <h3>BAHAN_ASLI</h3>
+              <p>DIAMBIL LANGSUNG DARI SUMBERNYA TANPA PERANTARA MAFIA. 😎</p>
+              <div class="sticker bg-mustard">STOK_FRESH</div>
+            </div>
+          </div>
 
-.page-title {
-  color: #FFDB00;
-  font-size: 2rem;
-  font-weight: 900;
-  letter-spacing: -2px;
-  /* Stroke untuk mempertegas gaya poster */
-  -webkit-text-stroke: 1.5px var(--black);
-  margin: 0;
-  opacity: 0;
-  animation: fadeRight 0.5s ease forwards;
-}
+          <div class="why-card card-rotate-right">
+            <div class="why-header bg-ketchup text-white">02 / SPEED</div>
+            <div class="why-content">
+              <h3>PROSES_KILAT</h3>
+              <p>KAMI TIDAK SUKA MENUNGGU LAMA, BEGITU JUGA DENGAN ANDA. 😤</p>
+              <div class="sticker bg-soda text-white">INSTANT_GET</div>
+            </div>
+          </div>
 
-.brutal-input {
-  background: var(--white);
-  border: var(--line);
-  padding: 1rem;
-  font-family: 'Space Mono', monospace;
-  font-weight: 700;
-  width: 300px;
-  outline: none;
-  box-shadow: 8px 8px 0px var(--mustard);
-  transition: 0.1s;
-  animation: fadeLeft 0.5s ease forwards;
-}
+          <div class="why-card card-rotate-mid">
+            <div class="why-header bg-soda text-white">03 / HONEST</div>
+            <div class="why-content">
+              <h3>HARGA_JUJUR</h3>
+              <p>APA YANG ANDA LIHAT, ITU YANG DIBAYAR. NO HIDDEN FEE. 😏</p>
+              <div class="sticker bg-mustard">NO_SCAM</div>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <section class="featured">
+        <div class="section-title border-bottom bg-white">
+          <h2 class="text-small">MENU_UNGGULAN</h2>
+        </div>
 
-.brutal-input:focus {
-  background: var(--mustard);
-  box-shadow: 12px 12px 0px var(--black);
-}
+        <div class="featured-grid bg-white">
+          <div class="sample-card card-tilt-left">
+            <div class="sample-visual">
+              <img src="../assets/nasi_goreng.jpg" alt="Nasi Goreng">
+              <div class="card-tag bg-ketchup">BEST_SELLER</div>
+            </div>
+            <div class="sample-body bg-white">
+              <div class="item-info">
+                <h4>NASI_GORENG</h4>
+                <span class="item-price">RP 10K</span>
+              </div>
+              <router-link to="/menu" class="mini-btn">LIHAT_UNIT</router-link>
+            </div>
+            <div class="visual-accent bg-mustard">TOP_RATED</div>
+          </div>
 
-/* 4. MAIN LAYOUT & SIDEBAR */
-.menu-container {
-  display: grid;
-  grid-template-columns: 300px 1fr;
-}
+          <div class="sample-card card-tilt-right">
+            <div class="sample-visual">
+              <img src="../assets/burger.jpg" alt="Burger">
+              <div class="card-tag bg-soda text-white">LIMITED</div>
+            </div>
+            <div class="sample-body bg-white">
+              <div class="item-info">
+                <h4>BURGER</h4>
+                <span class="item-price">RP 10K</span>
+              </div>
+              <router-link to="/menu" class="mini-btn">LIHAT_UNIT</router-link>
+            </div>
+          </div>
 
-.sidebar {
-  position: relative;
-  border-right: var(--line);
-  padding: 3rem;
-  background-color: #f9f9f9;
-  /* Pola Titik Industrial */
-  background-image: radial-gradient(var(--black) 1px, transparent 1px);
-  background-size: 20px 20px;
-}
-
-.sidebar-tag {
-  position: absolute;
-  right: -25px;
-  bottom: 100px;
-  transform: rotate(-90deg);
-  font-family: 'Space Mono', monospace;
-  font-size: 0.7rem;
-  font-weight: 900;
-  background: var(--black);
-  color: var(--white);
-  padding: 2px 10px;
-}
-
-/* 5. FILTER ELEMENTS */
-.filter-section {
-  margin-bottom: 3rem;
-}
-
-.filter-label {
-  font-size: 1.2rem;
-  font-weight: 900;
-  background: var(--black);
-  color: var(--white);
-  padding: 5px 10px;
-  margin-bottom: 1.5rem;
-  display: inline-block;
-  opacity: 0;
-  animation: fadeRight 0.5s ease forwards;
-  box-shadow: 4px 4px 0px var(--ketchup);
-}
-
-.filter-list {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.filter-list li {
-  font-weight: 800;
-  cursor: pointer;
-  padding: 5px 0;
-  transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.filter-list li:hover {
-  color: var(--ketchup);
-  padding-left: 10px;
-}
-
-.filter-list li.active {
-  color: var(--soda);
-  text-decoration: underline;
-  text-decoration-thickness: 4px;
-  transform: translateX(10px);
-  font-weight: 900;
-
-}
-
-.brutal-select {
-  width: 100%;
-  padding: 10px;
-  border: 4px solid var(--black);
-  font-weight: 900;
-  appearance: none;
-  background: var(--white);
-  cursor: pointer;
-  opacity: 0;
-  animation: fadeRight 0.5s ease forwards;
-}
-
-/* 6. PRODUCT GRID & FLOATING DECO */
-.product-grid {
-  display: grid;
-  /* Desktop default */
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-  gap: 2rem;
-  padding: 2rem;
-}
-
-.floating-sticker {
-  position: absolute;
-  top: -15px;
-  right: 40px;
-  padding: 8px 15px;
-  border: 3px solid var(--black);
-  font-weight: 900;
-  font-size: 0.9rem;
-  transform: rotate(3deg);
-  box-shadow: 5px 5px 0px var(--black);
-  z-index: 10;
-  background-color: var(--mustard);
-}
-
-.no-results {
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: 5rem;
-  font-size: 1.5rem;
-  font-weight: 900;
-  border: 4px dashed var(--black);
-  background: rgba(255, 255, 255, 0.8);
-}
-
-@media (max-width: 600px) {
-  .product-grid {
-    /* Paksa 1 kolom penuh agar kartu tidak terhimpit */
-    grid-template-columns: 1fr !important; 
-    gap: 2.5rem;
-    padding: 1.5rem; /* Beri ruang di pinggir agar shadow tidak terpotong */
-  }
-}
-
-/* 7. RESPONSIVE DESIGN */
-@media (max-width: 1024px) {
-  .menu-container {
-    grid-template-columns: 1fr;
-  }
-  .sidebar {
-    border-right: none;
-    border-bottom: var(--line);
-    padding: 2rem;
-  }
-  .menu-header {
-    flex-direction: column;
-    gap: 2rem;
-    align-items: flex-start;
-    padding: 2rem;
-  }
-  .brutal-input {
-    width: 100%;
-  }
-  .corner-accent, .sidebar-tag {
-    display: none;
-  }
-}
-</style>
-
-
-LandingPage.vue
-
+          <div class="sample-card card-tilt-left">
+            <div class="sample-visual">
+              <img src="../assets/jus_jeruk.jpg" alt="Drink">
+              <div class="card-tag bg-mustard">FRESH</div>
+            </div>
+            <div class="sample-body bg-white">
+              <div class="item-info">
+                <h4>JUS_JERUK_PERAS</h4>
+                <span class="item-price">RP 6K</span>
+              </div>
+              <router-link to="/menu" class="mini-btn">LIHAT_UNIT</router-link>
+            </div>
+            <div class="visual-accent bg-lettuce">NEW_BATCH</div>
+          </div>
+        </div>
+      </section>
+  
+      <div class="footerkan">
+        <BrutalFooter />
+      </div>
+    </div>
+  </template>
+  
+  <script setup>
+  import BrutalFooter from '../components/BrutalFooter.vue';
+  </script>
+  
 <style scoped>
 .landing-page {
   --black: #000000;
@@ -390,14 +156,14 @@ LandingPage.vue
 /* HERO SECTION */
 .hero {
   border-bottom: var(--line);
-  min-height: 90vh;
+  min-height: calc(100vh - 90px); /* Pastikan hero mengisi sisa layar tepat setelah navbar */
   display: flex;
-  align-items: center;
-  justify-content: center;
+  margin: 0; /* Pastikan tidak ada margin luar */
 }
 
 .hero-wrapper {
   width: 100%;
+  min-height: 100%;
   padding: 4rem 0;
   background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('../assets/bg.jpg');
   background-size: cover;
@@ -712,194 +478,59 @@ LandingPage.vue
 
 
 
-CartPage.vue
-<style scoped>
-.cart-page {
-  --black: #000000;
-  --white: #FFFFFF;
-  --mustard: #FFDB00;
-  --ketchup: #FF0000;
-  --soda: #0051FF;
-  --border: 5px solid var(--black);
-  
-  min-height: 100vh;
-  padding: 2rem;
-  background-color: #f0f0f0;
-  font-family: 'Space Grotesk', sans-serif;
-  position: relative;
-}
 
-.empty-card {
-  padding: 10px;
-}
+ini foodcardnya
 
-.bg-grid {
-  position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background-image: radial-gradient(var(--black) 1px, transparent 1px);
-  background-size: 30px 30px;
-  opacity: 0.1;
-  z-index: 0;
-}
+<template>
+  <div class="card">
+    <div class="card-header bg-black text-white">
+      <span class="category-tag">ITEM_ID: {{ id }}</span>
+      <span v-if="discount" class="promo-tag bg-ketchup">PROMO_{{ discount }}%</span>
+    </div>
 
-/* HEADER */
-.cart-header {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 3rem;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
+    <div class="card-visual">
+      <div class="visual-overlay"></div>
+      <div class="visual-placeholder">
+        <img :src="image" :alt="name" class="product-img">
+      </div>
+      <div class="image-noise"></div>
+    </div>
 
-.header-box {
-  border: var(--border);
-  padding: 1rem 2rem;
-  box-shadow: 8px 8px 0px var(--black);
-}
+    <div class="card-body bg-white">
+      <div class="info-row">
+        <h3 class="product-name">{{ name }}</h3>
+        <div class="price-box bg-mustard">
+          IDR_{{ price }}K
+        </div>
+      </div>
+      <p class="product-desc">{{ description }}</p>
+    </div>
 
-.title { font-weight: 900; font-size: 2.5rem; margin: 0; }
+    <div class="card-footer">
+      <button 
+        @click="$emit('add-to-cart', { id, name, price, description })" 
+        class="buy-button"
+      >
+        TAMBAH_KE_KERANJANG [+]
+      </button>
+    </div>
+  </div>
+</template>
 
-.back-link {
-  border: var(--border);
-  padding: 1rem;
-  text-decoration: none;
-  color: var(--black);
-  font-weight: 800;
-  box-shadow: 4px 4px 0px var(--black);
-}
+<script setup>
+defineProps({
+  id: Number,
+  name: String,
+  price: Number,
+  description: String,
+  image: String,
+  discount: Number
+});
 
-/* LAYOUT */
-.main-layout {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: 1fr 400px;
-  gap: 2rem;
-}
+// Mendefinisikan event agar dipahami oleh parent (MenuPage)
+defineEmits(['add-to-cart']);
+</script>
 
-/* ITEMS */
-.item-card {
-  background: white;
-  display: flex;
-  align-items: center;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  gap: 1.5rem;
-  box-shadow: 8px 8px 0px var(--black);
-}
-
-.item-img {
-  width: 80px; height: 80px;
-  border: var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem; font-weight: 900;
-}
-
-.item-info { flex-grow: 1; }
-.item-id { font-family: 'Space Mono', monospace; font-size: 0.8rem; opacity: 0.6; }
-.item-name { font-size: 1.5rem; font-weight: 900; margin: 0; }
-.item-price { font-weight: 800; color: var(--soda); }
-
-.item-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  align-items: flex-end;
-}
-
-.qty-control {
-  display: flex;
-  align-items: center;
-  background: white;
-}
-
-.qty-btn {
-  width: 40px; height: 40px;
-  border: none; background: none;
-  font-size: 1.5rem; font-weight: 900;
-  cursor: pointer;
-}
-
-.qty-btn:hover { background: var(--mustard); }
-.qty-num {
-  padding: 0 15px;
-  font-weight: 900;
-  border-left: var(--border);
-  border-right: var(--border);
-}
-
-.remove-btn {
-  border: 3px solid var(--black);
-  padding: 5px 15px;
-  color: black; font-weight: 900;
-  cursor: pointer;
-}
-
-/* SUMMARY */
-.summary-card {
-  padding: 2rem;
-  box-shadow: 12px 12px 0px var(--black);
-  position: sticky;
-  top: 100px;
-}
-
-.summary-title { font-weight: 900; border-bottom: var(--border); padding-bottom: 1rem; margin-top: 0; }
-
-.detail-row {
-  display: flex;
-  justify-content: space-between;
-  margin: 1rem 0;
-  font-weight: 700;
-}
-
-.total { font-size: 1.5rem; font-weight: 900; }
-.total-amount { color: var(--ketchup); }
-
-.brutal-hr { border: none; border-top: var(--border); margin: 1.5rem 0; }
-
-.checkout-btn {
-  width: 100%;
-  padding: 1.5rem;
-  border: var(--border);
-  font-weight: 900;
-  font-size: 1.2rem;
-  cursor: pointer;
-  box-shadow: 6px 6px 0px var(--black);
-  transition: 0.1s;
-}
-
-.checkout-btn:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 8px 8px 0px var(--black);
-}
-
-.industrial-note {
-  margin-top: 2rem;
-  padding: 1rem;
-  border: var(--border);
-  font-size: 0.7rem;
-  font-family: 'Space Mono', monospace;
-}
-
-.border-brutal { border: var(--border); }
-
-/* RESPONSIVE */
-@media (max-width: 1024px) {
-  .main-layout { grid-template-columns: 1fr; }
-  .summary-section { order: -1; } /* Summary muncul di atas pada mobile */
-  .item-card { flex-direction: column; text-align: center; }
-  .item-actions { align-items: center; width: 100%; }
-  .qty-control { width: 100%; justify-content: space-between; }
-}
-</style>
-
-
-FoodCart.vue
 <style scoped>
 @keyframes fadeIn {
   from {
@@ -974,10 +605,12 @@ FoodCart.vue
 
 .info-row {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
   gap: 10px;
   margin-bottom: 1rem;
+  overflow-wrap: break-word;
 }
 
 .product-name {
@@ -1122,387 +755,6 @@ FoodCart.vue
   .buy-button {
     padding: 1rem; /* Tombol lebih ramping */
     font-size: 0.9rem;
-  }
-}
-</style>
-
-
-BrutalFooter.vue
-<style scoped>
-  .brutal-footer {
-    --black: #000000;
-    --white: #FFFFFF;
-    --mustard: #FFDB00; /* Warna kuning lebih cerah agar lebih cantik */
-    --line: 5px solid var(--black);
-    margin-top: 80px;
-    width: 100%;
-    background-color: var(--white);
-    border-top: var(--line);
-    font-family: 'Space Grotesk', sans-serif;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  /* 2. MAIN CONTENT GRID */
-  .footer-main {
-    display: grid;
-    grid-template-columns: 1.5fr 1.2fr 1fr;
-  }
-  
-  .footer-col {
-    padding: 4rem 3rem;
-    border-right: var(--line);
-    display: flex;
-    flex-direction: column;
-    position: relative;
-  }
-  
-  .action-col { border-right: none; }
-  
-  /* DECORATION */
-  .corner-decoration {
-    border-top-left-radius: 50%;
-    border-top-right-radius: 50%;
-    border: var(--line);
-    position: absolute;
-    bottom: -20px;
-    right: -20px;
-    font-size: 40px;
-    font-weight: 900;
-    z-index: 5;
-    background: white;
-    padding: 0 5px;
-  }
-  
-  /* TYPOGRAPHY */
-  .footer-logo {
-    font-size: 3.5rem;
-    font-weight: 900;
-    line-height: 0.85;
-    margin-bottom: 2rem;
-    letter-spacing: -3px;
-  }
-  
-  .text-outline {
-    -webkit-text-stroke: 2px var(--black);
-    color: transparent;
-  }
-  
-  .brand-desc {
-    font-weight: 700;
-    line-height: 1.5;
-    color: var(--black);
-    max-width: 300px;
-  }
-  
-  .col-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.9rem;
-    font-weight: 900;
-    margin-bottom: 2rem;
-    display: inline-block;
-  }
-  
-  .col-label.inverted {
-    background: var(--black);
-    color: var(--white);
-    padding: 5px 12px;
-    width: fit-content;
-    box-shadow: 6px 6px 0px var(--white);
-    margin-bottom: 2.5rem;
-  }
-  
-  /* LINKS AREA */
-  .links-col {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    background-image: radial-gradient(var(--black) 1px, transparent 1px);
-    background-size: 25px 25px; /* Motif bintik halus */
-  }
-  
-  .link-group {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .link-group a {
-    text-decoration: none;
-    color: var(--black);
-    font-weight: 900;
-    font-size: 1.1rem;
-    transition: 0.1s;
-  }
-  
-  .link-group a:hover {
-    color: var(--mustard);
-    -webkit-text-stroke: 1px var(--black);
-    transform: skewX(-10deg) translateX(5px);
-  }
-  
-  /* NEWSLETTER & ACTION */
-  .newsletter-input {
-    display: flex;
-    border: var(--line);
-    background: var(--white);
-    box-shadow: 8px 8px 0px var(--black);
-    margin-bottom: 3rem;
-  }
-  
-  .newsletter-input input {
-    border: none;
-    padding: 15px;
-    flex-grow: 1;
-    font-family: 'Space Mono', monospace;
-    font-weight: 700;
-    outline: none;
-    width: 50%;
-  }
-  
-  .join-btn {
-    border: none;
-    border-left: var(--line);
-    padding: 0 25px;
-    font-weight: 900;
-    cursor: pointer;
-    transition: 0.2s;
-  }
-  
-  .join-btn:hover {
-    background: var(--white);
-    color: var(--black);
-  }
-  
-  .contact-box {
-    margin-top: auto;
-  }
-  
-  .contact-info {
-    font-family: 'Space Mono', monospace;
-    font-weight: 800;
-    font-size: 0.9rem;
-    margin-top: 5px;
-  }
-  
-  /* BOTTOM BAR */
-  .footer-bottom {
-    border-top: var(--line);
-    padding: 2rem 3rem;
-    display: flex;
-    justify-content: space-between;
-    font-family: 'Space Mono', monospace;
-    font-weight: 900;
-    background-color: var(--black);
-    color: var(--white);
-  }
-  
-  /* RESPONSIVE */
-  @media (max-width: 1100px) {
-    .footer-main { grid-template-columns: 1fr; }
-    .footer-col { border-right: none; border-bottom: var(--line); padding: 3rem; }
-    .links-col { background-image: none; }
-  }
-  
-  @media (max-width: 600px) {
-    .footer-logo { font-size: 2.5rem; }
-    .links-col { grid-template-columns: 1fr; gap: 3rem; }
-    .footer-bottom { flex-direction: column; gap: 15px; text-align: center; }
-  }
-  
-  /* UTILITY */
-  .bg-black { background-color: var(--black); }
-  .bg-mustard { background-color: var(--mustard); }
-  .text-white { color: var(--white); }
-  </style>
-
-
-
-
-AppNavbar.vue
-<style scoped>
-.navbar {
-  --black: #000000;
-  --white: #FFFFFF;
-  --mustard: #FFDB00;
-  --ketchup: #FF0000;
-  --lettuce: #00FF47;
-  --soda: #0051FF;
-  --border-width: 5px;
-  
-  display: flex;
-  height: 90px; /* Sedikit lebih tinggi agar lebih megah */
-  background-color: var(--white);
-  border-bottom: var(--border-width) solid var(--black);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  font-family: 'Space Grotesk', sans-serif;
-}
-
-/* BRAND SECTION */
-.nav-brand {
-  display: flex;
-  align-items: center;
-  padding: 0 2.5rem;
-  background-color: var(--mustard);
-  border-right: var(--border-width) solid var(--black);
-  transition: background 0.2s;
-}
-
-.nav-brand:hover {
-  background-color: var(--soda);
-}
-
-.logo {
-  font-size: 2rem;
-  font-weight: 900;
-  text-decoration: none;
-  color: var(--black);
-  letter-spacing: -2px;
-}
-
-.outline-text {
-  color: var(--white);
-  -webkit-text-stroke: 1.5px var(--black);
-}
-
-/* LINKS SECTION */
-.nav-links {
-  display: flex;
-  flex-grow: 1;
-}
-
-.nav-item {
-  display: flex;
-  align-items: center;
-  padding: 0 2rem;
-  border-right: var(--border-width) solid var(--black);
-  text-decoration: none;
-  color: var(--black);
-  font-weight: 900;
-  font-size: 1rem;
-  position: relative;
-  overflow: hidden;
-  transition: 0.1s;
-}
-
-/* Efek Hover Brutal: Teks naik ke atas */
-.nav-text {
-  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.nav-item:hover {
-  background-color: var(--black);
-  color: var(--white);
-}
-
-.nav-item:hover .nav-text {
-  transform: scale(1.1) rotate(-2deg);
-}
-
-/* Active Link State */
-.router-link-active:not(.logo) {
-  background-color: var(--soda);
-  color: var(--white);
-}
-
-/* CART BOX */
-.cart-box {
-  margin-left: auto;
-  display: flex;
-}
-
-.cart-link {
-  background-color: var(--lettuce);
-  border-right: none;
-  border-left: var(--border-width) solid var(--black);
-  min-width: 160px;
-  justify-content: center;
-}
-
-.cart-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.cart-badge {
-  font-family: 'Space Mono', monospace;
-  padding: 2px 10px;
-  border: 3px solid var(--black);
-  font-size: 1.1rem;
-  background-color: black;
-}
-
-.cart-badge:hover {
-  background-color: white;
-}
-
-.text-lettuce { color: var(--lettuce); }
-
-/* MOBILE TOGGLE */
-.mobile-toggle {
-  display: none;
-  color: var(--white);
-  border: none;
-  border-left: var(--border-width) solid var(--black);
-  padding: 0 2rem;
-  font-weight: 900;
-  font-size: 1.2rem;
-  cursor: pointer;
-}
-
-.mobile-toggle:hover {
-  background-color: var(--black);
-}
-
-/* RESPONSIVE */
-/* RESPONSIVE REPAIR */
-@media (max-width: 992px) {
-  .navbar { height: 70px; }
-  .logo { font-size: 1.5rem; }
-  
-  .mobile-toggle {
-    display: block;
-    margin-left: auto;
-  }
-
-  .nav-links {
-    display: flex; /* Ubah dari none ke flex */
-    flex-direction: column;
-    position: fixed;
-    top: 70px; /* Sesuai tinggi navbar mobile */
-    left: 0;
-    width: 100%;
-    background-color: var(--white);
-    border-bottom: var(--border-width) solid var(--black);
-    
-    /* Sembunyikan secara default menggunakan transform agar bisa dianimasi */
-    transform: translateY(-150%);
-    transition: transform 0.4s ease; /* Efek patah-patah khas brutalist */
-    z-index: -1;
-  }
-
-  /* Munculkan saat tombol diklik */
-  .nav-links.is-active {
-    transform: translateY(0);
-  }
-
-  .nav-item {
-    width: 100%;
-    padding: 1.5rem 2rem;
-    border-right: none;
-    border-bottom: var(--border-width) solid var(--black);
-  }
-
-  .cart-box {
-    width: 100%;
-  }
-
-  .cart-link {
-    width: 100%;
-    border-left: none;
-    justify-content: flex-start;
   }
 }
 </style>
