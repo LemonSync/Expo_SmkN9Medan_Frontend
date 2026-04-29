@@ -42,7 +42,7 @@
     </div>
 
     <button class="mobile-toggle bg-ketchup" @click="toggleMenu">
-      {{ isMenuOpen ? 'CLOSE_[X]' : 'MENU_[-]' }}
+      {{ isMenuOpen ? 'CLOSE [X]' : 'MENU [-]' }}
     </button>
   </nav>
 </template>
