@@ -1,760 +1,250 @@
-buatkan bagian populer menu mirip dengan FoodCard
+coba tambahkan icon keranjang di cartnya
 
 <template>
-    <div class="landing-page">
-      <section class="hero">
-        <div class="hero-wrapper">
-          <div class="badge-container">
-            <div class="badge bg-black text-white">SMK_BISA | SMK_HEBAT</div>
-          </div>
-  
-          <div class="hero-main-content">
-            <h1 class="main-title left">SELAMAT_<br /> DATANG_DI</h1>
-  
-            <div class="hero-visual-center bg-soda">
-              <div class="visual-box bg-white">
-                <img src="../assets/logo.jpg" class="full-img" alt="Logo SMKN9">
-              </div>
-            </div>
-  
-            <h1 class="main-title right">
-              <span class="outline-text">SMKN9_SHOP</span>
-            </h1>
-          </div>
-  
-          <div class="hero-footer-content">
-            <p class="description">
-              Kami menyediakan menu makanan dan minuman yang sehat bagi pembeli yang datang ke toko kami.
-            </p>
-            <router-link to="/menu" class="cta-btn bg-mustard">
-              ORDER_SEKARANG [->]
-            </router-link>
-          </div>
-        </div>
-      </section>
-  
-      <section class="why-us-section">
-        <div class="section-title border-bottom bg-white">
-          <h2 class="text-small">KENAPA_KAMI_?</h2>
-        </div>
-        
-        <div class="why-us-grid bg-white">
-          <div class="why-card card-rotate-left">
-            <div class="why-header bg-black text-white">01 / LOKAL</div>
-            <div class="why-content">
-              <h3>BAHAN_ASLI</h3>
-              <p>DIAMBIL LANGSUNG DARI SUMBERNYA TANPA PERANTARA MAFIA. 😎</p>
-              <div class="sticker bg-mustard">STOK_FRESH</div>
-            </div>
-          </div>
+  <nav class="navbar">
+    <div class="nav-brand">
+      <router-link to="/" class="logo">
+        SMKN9_<span class="outline-text">SHOP</span>
+      </router-link>
+    </div>
 
-          <div class="why-card card-rotate-right">
-            <div class="why-header bg-ketchup text-white">02 / SPEED</div>
-            <div class="why-content">
-              <h3>PROSES_KILAT</h3>
-              <p>KAMI TIDAK SUKA MENUNGGU LAMA, BEGITU JUGA DENGAN ANDA. 😤</p>
-              <div class="sticker bg-soda text-white">INSTANT_GET</div>
-            </div>
-          </div>
+    <div class="nav-links" :class="{ 'is-active': isMenuOpen }">
+      <router-link to="/" class="nav-item" @click="isMenuOpen = false">
+        <span class="nav-text">HOME</span>
+      </router-link>
+      <router-link to="/menu" class="nav-item" @click="isMenuOpen = false">
+        <span class="nav-text">MENU_KATALOG</span>
+      </router-link>
 
-          <div class="why-card card-rotate-mid">
-            <div class="why-header bg-soda text-white">03 / HONEST</div>
-            <div class="why-content">
-              <h3>HARGA_JUJUR</h3>
-              <p>APA YANG ANDA LIHAT, ITU YANG DIBAYAR. NO HIDDEN FEE. 😏</p>
-              <div class="sticker bg-mustard">NO_SCAM</div>
-            </div>
+      <div class="cart-box">
+        <router-link to="/cart" class="nav-item cart-link" @click="isMenuOpen = false">
+          <div class="cart-wrapper">
+            <span class="cart-label">CART</span>
+            <span class="cart-badge text-lettuce">{{ totalItems }}</span>
           </div>
-        </div>
-      </section>
-  
-      <section class="featured">
-        <div class="section-title border-bottom bg-white">
-          <h2 class="text-small">MENU_UNGGULAN</h2>
-        </div>
-
-        <div class="featured-grid bg-white">
-          <div class="sample-card card-tilt-left">
-            <div class="sample-visual">
-              <img src="../assets/nasi_goreng.jpg" alt="Nasi Goreng">
-              <div class="card-tag bg-ketchup">BEST_SELLER</div>
-            </div>
-            <div class="sample-body bg-white">
-              <div class="item-info">
-                <h4>NASI_GORENG</h4>
-                <span class="item-price">RP 10K</span>
-              </div>
-              <router-link to="/menu" class="mini-btn">LIHAT_UNIT</router-link>
-            </div>
-            <div class="visual-accent bg-mustard">TOP_RATED</div>
-          </div>
-
-          <div class="sample-card card-tilt-right">
-            <div class="sample-visual">
-              <img src="../assets/burger.jpg" alt="Burger">
-              <div class="card-tag bg-soda text-white">LIMITED</div>
-            </div>
-            <div class="sample-body bg-white">
-              <div class="item-info">
-                <h4>BURGER</h4>
-                <span class="item-price">RP 10K</span>
-              </div>
-              <router-link to="/menu" class="mini-btn">LIHAT_UNIT</router-link>
-            </div>
-          </div>
-
-          <div class="sample-card card-tilt-left">
-            <div class="sample-visual">
-              <img src="../assets/jus_jeruk.jpg" alt="Drink">
-              <div class="card-tag bg-mustard">FRESH</div>
-            </div>
-            <div class="sample-body bg-white">
-              <div class="item-info">
-                <h4>JUS_JERUK_PERAS</h4>
-                <span class="item-price">RP 6K</span>
-              </div>
-              <router-link to="/menu" class="mini-btn">LIHAT_UNIT</router-link>
-            </div>
-            <div class="visual-accent bg-lettuce">NEW_BATCH</div>
-          </div>
-        </div>
-      </section>
-  
-      <div class="footerkan">
-        <BrutalFooter />
+        </router-link>
       </div>
     </div>
-  </template>
-  
-  <script setup>
-  import BrutalFooter from '../components/BrutalFooter.vue';
-  </script>
-  
+
+    <button class="mobile-toggle bg-ketchup" @click="toggleMenu">
+      {{ isMenuOpen ? 'CLOSE_[X]' : 'MENU_[-]' }}
+    </button>
+  </nav>
+</template>
+
+<script setup>
+import { computed, ref } from 'vue'; // Tambah ref
+import { cart } from '../store/cart.js';
+
+const isMenuOpen = ref(false); // State untuk buka/tutup menu
+
+const toggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value;
+};
+
+const totalItems = computed(() => {
+  return cart.value.reduce((acc, item) => acc + item.qty, 0);
+});
+</script>
+
 <style scoped>
-.landing-page {
+.navbar {
   --black: #000000;
   --white: #FFFFFF;
   --mustard: #FFDB00;
   --ketchup: #FF0000;
   --lettuce: #00FF47;
   --soda: #0051FF;
-  --line: 6px solid var(--black);
-  
+  --border-width: 5px;
+
   width: 100%;
+  top: 0;
+  left: 0;
+  margin: 0;
+  display: flex;
+  height: 90px;
+  /* Sedikit lebih tinggi agar lebih megah */
   background-color: var(--white);
+  border-bottom: var(--border-width) solid var(--black);
+  position: sticky;
+  z-index: 1000;
   font-family: 'Space Grotesk', sans-serif;
-  color: var(--black);
-  overflow-x: hidden;
 }
 
-.full-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* HERO SECTION */
-.hero {
-  border-bottom: var(--line);
-  min-height: calc(100vh - 90px); /* Pastikan hero mengisi sisa layar tepat setelah navbar */
-  display: flex;
-  margin: 0; /* Pastikan tidak ada margin luar */
-}
-
-.hero-wrapper {
-  width: 100%;
-  min-height: 100%;
-  padding: 4rem 0;
-  background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('../assets/bg.jpg');
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  animation: fadeIn 0.8s ease;
-}
-
-.hero-main-content {
-  gap: 3rem;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  color: white;
-  animation: fadeIn 1.5s ease;
-}
-
-.hero-visual-center {
-  width: 280px;
-  height: 280px;
-  border-radius: 50%;
-  border: var(--line);
+/* BRAND SECTION */
+.nav-brand {
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 1rem;
+  padding: 0 2.5rem;
   background-color: var(--mustard);
+  border-right: var(--border-width) solid var(--black);
+  transition: background 0.2s;
 }
 
-.visual-box {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  border: var(--line);
-  overflow: hidden;
-  background: white;
+.nav-brand:hover {
+  background-color: var(--soda);
 }
 
-.main-title {
-  font-size: clamp(2rem, 5vw, 4.5rem);
+.logo {
+  font-size: 2rem;
   font-weight: 900;
-  line-height: 1;
+  text-decoration: none;
+  color: var(--black);
+  letter-spacing: -2px;
 }
 
 .outline-text {
-  -webkit-text-stroke: 2px white;
-  color: transparent;
-}
-
-.hero-footer-content {
-  margin-right: 100px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 0 20px;
-}
-
-.description {
-  color: white;
-  font-size: 1.2rem;
-  font-weight: 700;
-  max-width: 550px;
-  margin: 2rem auto;
-  text-align: center;
-}
-
-.cta-btn {
-  display: inline-block;
-  padding: 1.2rem 2.5rem;
-  border: var(--line);
-  font-size: 1.5rem;
-  font-weight: 900;
-  text-decoration: none;
-  color: var(--black);
-  background: var(--mustard);
-  box-shadow: 10px 10px 0px var(--black);
-  transition: 0.1s;
-}
-
-.cta-btn:hover {
-  transform: translate(-4px, -4px);
-  box-shadow: 14px 14px 0px var(--black);
-}
-
-/* WHY US SECTION */
-.why-us-section {
-  background-color: var(--white);
-  padding-bottom: 4rem;
-  border-bottom: var(--line);
-}
-
-.why-us-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 3rem;
-  padding: 4rem 3rem;
-  background-image: radial-gradient(var(--black) 1px, transparent 1px);
-  background-size: 25px 25px;
-}
-
-.why-card {
-  background: var(--white);
-  border: var(--line);
-  box-shadow: 12px 12px 0px var(--black);
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.why-card:hover {
-  transform: translate(-5px, -5px) rotate(0deg) !important;
-  box-shadow: 18px 18px 0px var(--black);
-  z-index: 10;
-}
-
-.why-header {
-  padding: 0.8rem;
-  font-family: 'Space Mono', monospace;
-  font-weight: 900;
-  border-bottom: var(--line);
-  font-size: 0.9rem;
-}
-
-.why-content {
-  padding: 2rem;
-  position: relative;
-  flex-grow: 1;
-}
-
-.why-content h3 {
-  font-size: 1.8rem;
-  font-weight: 900;
-  margin-bottom: 1rem;
-  letter-spacing: -1px;
-}
-
-.why-content p {
-  font-weight: 700;
-  font-size: 1rem;
-  line-height: 1.3;
-}
-
-.sticker {
-  position: absolute;
-  bottom: -15px;
-  right: -10px;
-  padding: 5px 10px;
-  border: 3px solid var(--black);
-  font-weight: 900;
-  font-size: 0.7rem;
-  box-shadow: 4px 4px 0px var(--black);
-}
-
-/* FEATURED SECTION */
-.featured {
-  animation: fadeIn 0.5s ease;
-}
-
-.section-title { padding: 1.5rem 3rem; }
-.text-small { font-size: 2rem; font-weight: 900; }
-
-.featured-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 4rem;
-  padding: 5rem 3rem;
-  background-image: linear-gradient(var(--black) 1.5px, transparent 1.5px),
-                    linear-gradient(90deg, var(--black) 1.5px, transparent 1.5px);
-  background-size: 50px 50px;
-  background-color: #e5e5e5;
-  border-bottom: var(--line);
-}
-
-.sample-card {
-  position: relative;
-  background: white;
-  border: var(--line);
-  box-shadow: 15px 15px 0px var(--black);
-  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  display: flex;
-  flex-direction: column;
-}
-
-.sample-card:hover {
-  transform: scale(1.05) rotate(0deg) !important;
-  box-shadow: 20px 20px 0px var(--soda);
-  z-index: 5;
-}
-
-.sample-visual {
-  height: 280px;
-  border-bottom: var(--line);
-  position: relative;
-  overflow: hidden;
-  background: var(--black);
-}
-
-.sample-visual img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: grayscale(20%);
-  transition: 0.5s;
-}
-
-.sample-card:hover .sample-visual img {
-  filter: grayscale(0%);
-  transform: scale(1.1);
-}
-
-.card-tag {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  padding: 5px 12px;
-  font-weight: 900;
-  font-size: 0.8rem;
-  border: 3px solid var(--black);
-  transform: rotate(-5deg);
-  z-index: 2;
-}
-
-.visual-accent {
-  position: absolute;
-  top: -15px;
-  right: -15px;
-  padding: 5px 15px;
-  border: 3px solid var(--black);
-  font-weight: 900;
-  font-size: 0.8rem;
-  box-shadow: 5px 5px 0px var(--black);
-  z-index: 3;
-}
-
-.sample-body {
-  padding: 1.5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-}
-
-.item-info h4 {
-  font-size: 1.3rem;
-  font-weight: 900;
-  margin: 0 0 5px 0;
-  letter-spacing: -1px;
-}
-
-.item-price {
-  font-family: 'Space Mono', monospace;
-  font-weight: 800;
-  color: var(--ketchup);
-}
-
-.mini-btn {
-  padding: 0.5rem 1rem;
-  border: 4px solid var(--black);
-  text-decoration: none;
-  color: var(--black);
-  font-weight: 900;
-  background: var(--mustard);
-  box-shadow: 4px 4px 0px var(--black);
-  transition: 0.1s;
-}
-
-.mini-btn:hover {
-  box-shadow: none;
-  transform: translate(2px, 2px);
-}
-
-/* ROTATION & TILT CLASSES */
-.card-rotate-left, .card-tilt-left { transform: rotate(-3deg); }
-.card-rotate-right, .card-tilt-right { transform: rotate(3deg); }
-.card-rotate-mid { transform: rotate(1deg); }
-
-/* UTILITIES */
-.badge-container { margin-bottom: 50px; }
-.badge { padding: 10px; font-weight: 900; border: 3px solid var(--white); margin-right: 100px; }
-.bg-white { background-color: var(--white); }
-.bg-black { background-color: var(--black); }
-.bg-mustard { background-color: var(--mustard); }
-.bg-soda { background-color: var(--soda); }
-.bg-ketchup { background-color: var(--ketchup); }
-.bg-lettuce { background-color: var(--lettuce); }
-.text-white { color: var(--white); }
-.border-bottom { border-bottom: var(--line); }
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* RESPONSIVE */
-@media (max-width: 1024px) {
-  .hero-main-content { flex-direction: column; gap: 2rem; }
-  .hero-footer-content { margin-right: 0; }
-  .why-us-grid, .featured-grid { 
-    grid-template-columns: 1fr; 
-    gap: 4rem; 
-    padding: 3rem 1.5rem; 
-  }
-  .why-card, .sample-card { transform: rotate(0deg) !important; }
-}
-</style>
-
-
-
-
-ini foodcardnya
-
-<template>
-  <div class="card">
-    <div class="card-header bg-black text-white">
-      <span class="category-tag">ITEM_ID: {{ id }}</span>
-      <span v-if="discount" class="promo-tag bg-ketchup">PROMO_{{ discount }}%</span>
-    </div>
-
-    <div class="card-visual">
-      <div class="visual-overlay"></div>
-      <div class="visual-placeholder">
-        <img :src="image" :alt="name" class="product-img">
-      </div>
-      <div class="image-noise"></div>
-    </div>
-
-    <div class="card-body bg-white">
-      <div class="info-row">
-        <h3 class="product-name">{{ name }}</h3>
-        <div class="price-box bg-mustard">
-          IDR_{{ price }}K
-        </div>
-      </div>
-      <p class="product-desc">{{ description }}</p>
-    </div>
-
-    <div class="card-footer">
-      <button 
-        @click="$emit('add-to-cart', { id, name, price, description })" 
-        class="buy-button"
-      >
-        TAMBAH_KE_KERANJANG [+]
-      </button>
-    </div>
-  </div>
-</template>
-
-<script setup>
-defineProps({
-  id: Number,
-  name: String,
-  price: Number,
-  description: String,
-  image: String,
-  discount: Number
-});
-
-// Mendefinisikan event agar dipahami oleh parent (MenuPage)
-defineEmits(['add-to-cart']);
-</script>
-
-<style scoped>
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.card {
-  --black: #000000;
-  --white: #FFFFFF;
-  --mustard: #FFDB00;
-  --ketchup: #FF0000;
-  --lettuce: #615721;
-  --soda: #0051FF;
-  --border-width: 5px;
-  
-  animation: fadeIn 0.5s ease;
-  display: flex;
-  flex-direction: column;
-  background-color: var(--white);
-  border: var(--border-width) solid var(--black);
-  
-  /* Perbaikan Shadow: Gunakan shadow lebih kecil di layar kecil nanti */
-  box-shadow: 8px 8px 0px 0px var(--black); 
-  
-  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  font-family: 'Space Grotesk', sans-serif;
-  height: 100%;
-  width: 100%; /* Pastikan ambil full width container */
-  box-sizing: border-box; /* WAJIB: agar border tidak nambah lebar */
-}
-
-.card:hover {
-  transform: translate(-4px, -4px);
-  box-shadow: 14px 14px 0px 0px var(--black);
-}
-
-/* HEADER SECTION */
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem 1rem;
-  border-bottom: var(--border-width) solid var(--black);
-  font-family: 'Space Mono', monospace;
-  font-size: 0.8rem;
-  font-weight: 700;
-}
-
-.promo-tag {
-  padding: 2px 8px;
   color: var(--white);
+  -webkit-text-stroke: 1.5px var(--black);
 }
 
-.initials {
-  font-size: 5rem;
-  font-weight: 900;
-  color: var(--black);
-  opacity: 0.15;
-}
-
-/* BODY SECTION */
-.card-body {
-  padding: 1.5rem;
+/* LINKS SECTION */
+.nav-links {
+  display: flex;
   flex-grow: 1;
 }
 
-.info-row {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 10px;
-  margin-bottom: 1rem;
-  overflow-wrap: break-word;
-}
-
-.product-name {
-  font-size: 1.4rem;
-  font-weight: 900;
-  line-height: 1;
-  text-transform: uppercase;
-}
-
-.price-box {
-  padding: 4px 8px;
-  border: 3px solid var(--black);
-  font-family: 'Space Mono', monospace;
-  font-weight: 900;
-  white-space: nowrap;
-}
-
-.product-desc {
-  font-size: 0.85rem;
-  font-weight: 600;
-  line-height: 1.4;
-  color: #333;
-}
-
-.card-visual {
-  height: 250px;
-  position: relative;
-  overflow: hidden;
-  border-bottom: 5px solid var(--black);
-  background-color: #e0e0e0; /* Warna dasar semen */
+.nav-item {
   display: flex;
   align-items: center;
-  justify-content: center;
-}
-
-/* Gambar Utama */
-.product-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: contrast(1.1) brightness(1.1); /* Efek brutal: kontras tinggi */
-  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.card:hover .product-img {
-  transform: scale(1.15) rotate(2deg); /* Efek zoom dan miring saat hover */
-}
-
-/* Efek Overlay Sudut (Khas Viewfinder Kamera) */
-.visual-overlay::before,
-.visual-overlay::after {
-  content: "";
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  z-index: 2;
-}
-
-.visual-overlay::before {
-  top: 15px; left: 15px;
-  border-top: 4px solid var(--black);
-  border-left: 4px solid var(--black);
-}
-
-.visual-overlay::after {
-  bottom: 15px; right: 15px;
-  border-bottom: 4px solid var(--black);
-  border-right: 4px solid var(--black);
-}
-
-/* Efek Noise/Tekstur (Opsional) */
-.image-noise {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background-image: url("https://www.transparenttextures.com/patterns/carbon-fibre.png");
-  opacity: 0.05;
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* Placeholder jika gambar gagal load */
-.visual-placeholder {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* FOOTER SECTION */
-.card-footer {
-  border-top: var(--border-width) solid var(--black);
-}
-
-.buy-button {
-  color: white;
-  width: 100%;
-  padding: 1.2rem;
-  background-color: var(--lettuce);
-  border: none;
-  font-family: inherit;
+  padding: 0 2rem;
+  border-right: var(--border-width) solid var(--black);
+  text-decoration: none;
+  color: var(--black);
   font-weight: 900;
   font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.1s;
-  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+  transition: 0.1s;
 }
 
-.buy-button:hover {
+/* Efek Hover Brutal: Teks naik ke atas */
+.nav-text {
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.nav-item:hover {
   background-color: var(--black);
   color: var(--white);
 }
 
-.buy-button:active {
-  background-color: var(--soda);
-  transform: scale(0.98); /* Efek pencet */
+.nav-item:hover .nav-text {
+  transform: scale(1.1) rotate(-2deg);
 }
 
-/* UTILITY CLASSES */
-.bg-black { background-color: var(--black); }
-.bg-white { background-color: var(--white); }
-.bg-mustard { background-color: var(--mustard); }
-.bg-ketchup { background-color: var(--ketchup); }
-.text-white { color: var(--white); }
+/* Active Link State */
+.router-link-active:not(.logo) {
+  background-color: var(--soda);
+  color: var(--white);
+}
 
-@media (max-width: 480px) {
-  .card {
-    /* Kurangi shadow agar tidak memotong space grid */
-    box-shadow: 5px 5px 0px 0px var(--black);
-    border-width: 4px; /* Sedikit lebih tipis di mobile */
+/* CART BOX */
+.cart-box {
+  margin-left: auto;
+  display: flex;
+}
+
+.cart-link {
+  background-color: var(--lettuce);
+  border-right: none;
+  border-left: var(--border-width) solid var(--black);
+  min-width: 160px;
+  justify-content: center;
+}
+
+.cart-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cart-badge {
+  font-family: 'Space Mono', monospace;
+  padding: 2px 10px;
+  border: 3px solid var(--black);
+  font-size: 1.1rem;
+  background-color: black;
+}
+
+.cart-badge:hover {
+  background-color: white;
+}
+
+.text-lettuce {
+  color: var(--lettuce);
+}
+
+/* MOBILE TOGGLE */
+.mobile-toggle {
+  display: none;
+  color: black;
+  border: none;
+  border-left: var(--border-width) solid var(--black);
+  padding: 0 2rem;
+  font-weight: 900;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.mobile-toggle:hover {
+  background-color: var(--black);
+}
+
+/* RESPONSIVE */
+/* RESPONSIVE REPAIR */
+@media (max-width: 992px) {
+  .navbar {
+    height: 70px;
   }
 
-  .card-visual {
-    height: 180px; /* Perkecil tinggi gambar di HP agar tidak menu-full */
+  .logo {
+    font-size: 1.5rem;
   }
 
-  .product-name {
-    font-size: 1.1rem; /* Sesuaikan ukuran font */
+  .mobile-toggle {
+    display: block;
+    margin-left: auto;
   }
 
-  .buy-button {
-    padding: 1rem; /* Tombol lebih ramping */
-    font-size: 0.9rem;
+  .nav-links {
+    display: flex;
+    /* Ubah dari none ke flex */
+    flex-direction: column;
+    position: fixed;
+    top: 70px;
+    /* Sesuai tinggi navbar mobile */
+    left: 0;
+    width: 100%;
+    background-color: var(--white);
+    border-bottom: var(--border-width) solid var(--black);
+
+    /* Sembunyikan secara default menggunakan transform agar bisa dianimasi */
+    transform: translateY(-150%);
+    transition: transform 0.4s ease;
+    /* Efek patah-patah khas brutalist */
+    z-index: -1;
+  }
+
+  /* Munculkan saat tombol diklik */
+  .nav-links.is-active {
+    transform: translateY(0);
+  }
+
+  .nav-item {
+    width: 100%;
+    padding: 1.5rem 2rem;
+    border-right: none;
+    border-bottom: var(--border-width) solid var(--black);
+  }
+
+  .cart-box {
+    width: 100%;
+  }
+
+  .cart-link {
+    width: 100%;
+    border-left: none;
+    justify-content: flex-start;
   }
 }
 </style>

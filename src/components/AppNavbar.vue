@@ -17,6 +17,23 @@
       <div class="cart-box">
         <router-link to="/cart" class="nav-item cart-link" @click="isMenuOpen = false">
           <div class="cart-wrapper">
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              width="24" 
+              height="24" 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="currentColor" 
+              stroke-width="3" 
+              stroke-linecap="square" 
+              stroke-linejoin="miter" 
+              class="cart-icon"
+            >
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            
             <span class="cart-label">CART</span>
             <span class="cart-badge text-lettuce">{{ totalItems }}</span>
           </div>
@@ -31,10 +48,10 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'; // Tambah ref
+import { computed, ref } from 'vue';
 import { cart } from '../store/cart.js';
 
-const isMenuOpen = ref(false); // State untuk buka/tutup menu
+const isMenuOpen = ref(false);
 
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value;
@@ -61,7 +78,6 @@ const totalItems = computed(() => {
   margin: 0;
   display: flex;
   height: 90px;
-  /* Sedikit lebih tinggi agar lebih megah */
   background-color: var(--white);
   border-bottom: var(--border-width) solid var(--black);
   position: sticky;
@@ -116,7 +132,6 @@ const totalItems = computed(() => {
   transition: 0.1s;
 }
 
-/* Efek Hover Brutal: Teks naik ke atas */
 .nav-text {
   transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
@@ -130,7 +145,6 @@ const totalItems = computed(() => {
   transform: scale(1.1) rotate(-2deg);
 }
 
-/* Active Link State */
 .router-link-active:not(.logo) {
   background-color: var(--soda);
   color: var(--white);
@@ -146,14 +160,24 @@ const totalItems = computed(() => {
   background-color: var(--lettuce);
   border-right: none;
   border-left: var(--border-width) solid var(--black);
-  min-width: 160px;
+  min-width: 180px;
   justify-content: center;
 }
 
 .cart-wrapper {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
+}
+
+.cart-icon {
+  width: 26px;
+  height: 26px;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.cart-link:hover .cart-icon {
+  transform: rotate(-15deg) scale(1.2);
 }
 
 .cart-badge {
@@ -162,20 +186,18 @@ const totalItems = computed(() => {
   border: 3px solid var(--black);
   font-size: 1.1rem;
   background-color: black;
-}
-
-.cart-badge:hover {
-  background-color: white;
-}
-
-.text-lettuce {
   color: var(--lettuce);
+}
+
+.nav-item:hover .cart-badge {
+  background-color: white;
+  color: black;
 }
 
 /* MOBILE TOGGLE */
 .mobile-toggle {
   display: none;
-  color: black;
+  color: white;
   border: none;
   border-left: var(--border-width) solid var(--black);
   padding: 0 2rem;
@@ -188,7 +210,6 @@ const totalItems = computed(() => {
   background-color: var(--black);
 }
 
-/* RESPONSIVE */
 /* RESPONSIVE REPAIR */
 @media (max-width: 992px) {
   .navbar {
@@ -206,24 +227,18 @@ const totalItems = computed(() => {
 
   .nav-links {
     display: flex;
-    /* Ubah dari none ke flex */
     flex-direction: column;
     position: fixed;
     top: 70px;
-    /* Sesuai tinggi navbar mobile */
     left: 0;
     width: 100%;
     background-color: var(--white);
     border-bottom: var(--border-width) solid var(--black);
-
-    /* Sembunyikan secara default menggunakan transform agar bisa dianimasi */
     transform: translateY(-150%);
     transition: transform 0.4s ease;
-    /* Efek patah-patah khas brutalist */
     z-index: -1;
   }
 
-  /* Munculkan saat tombol diklik */
   .nav-links.is-active {
     transform: translateY(0);
   }
@@ -243,6 +258,11 @@ const totalItems = computed(() => {
     width: 100%;
     border-left: none;
     justify-content: flex-start;
+  }
+  
+  .cart-icon {
+    width: 22px;
+    height: 22px;
   }
 }
 </style>
