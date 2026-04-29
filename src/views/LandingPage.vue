@@ -68,53 +68,20 @@
   
       <section class="featured">
         <div class="section-title border-bottom bg-white">
-          <h2 class="text-small">MENU_UNGGULAN_[-]</h2>
+          <h2 class="text-small">MENU_UNGGULAN</h2>
         </div>
 
         <div class="featured-grid bg-white">
-          <div class="sample-card card-tilt-left">
-            <div class="sample-visual">
-              <img src="../assets/nasi_goreng.jpg" alt="Nasi Goreng">
-              <div class="card-tag bg-ketchup">BEST_SELLER</div>
-            </div>
-            <div class="sample-body bg-white">
-              <div class="item-info">
-                <h4>NASI_GORENG</h4>
-                <span class="item-price">RP 10K</span>
-              </div>
-              <router-link to="/menu" class="mini-btn">LIHAT_UNIT</router-link>
-            </div>
-            <div class="visual-accent bg-mustard">TOP_RATED</div>
-          </div>
-
-          <div class="sample-card card-tilt-right">
-            <div class="sample-visual">
-              <img src="../assets/burger.jpg" alt="Burger">
-              <div class="card-tag bg-soda text-white">LIMITED</div>
-            </div>
-            <div class="sample-body bg-white">
-              <div class="item-info">
-                <h4>BURGER</h4>
-                <span class="item-price">RP 10K</span>
-              </div>
-              <router-link to="/menu" class="mini-btn">LIHAT_UNIT</router-link>
-            </div>
-          </div>
-
-          <div class="sample-card card-tilt-left">
-            <div class="sample-visual">
-              <img src="../assets/jus_jeruk.jpg" alt="Drink">
-              <div class="card-tag bg-mustard">FRESH</div>
-            </div>
-            <div class="sample-body bg-white">
-              <div class="item-info">
-                <h4>JUS_JERUK_PERAS</h4>
-                <span class="item-price">RP 6K</span>
-              </div>
-              <router-link to="/menu" class="mini-btn">LIHAT_UNIT</router-link>
-            </div>
-            <div class="visual-accent bg-lettuce">NEW_BATCH</div>
-          </div>
+          <FoodCard 
+          v-for="product in listProducts" 
+          :key="product.id"
+          :id="product.id"
+          :name="product.name"
+          :price="product.price"
+          :description="product.description"
+          v-bind="product"
+          @add-to-cart="alihkan()"
+        />
         </div>
       </section>
   
@@ -125,7 +92,42 @@
   </template>
   
   <script setup>
+  import FoodCard from '../components/FoodCard.vue';
   import BrutalFooter from '../components/BrutalFooter.vue';
+  import { useRouter } from "vue-router"
+
+  const router = useRouter()
+
+  const alihkan = () => {
+    router.replace({ name: 'home' })
+  }
+
+  const listProducts = ref([
+  { 
+    id: 114, 
+    name: 'NASI_GORENG', 
+    price: 10, 
+    category: 'MAKANAN_BERAT', 
+    description: 'Nasi goreng yang nikmat dan gurih, pas dijadiin santapan saat jam istirahat.', 
+    image: '/images/nasi_goreng.jpg' 
+  },
+  { 
+    id: 115, 
+    name: 'BURGER', 
+    price: 10, 
+    category: 'MAKANAN_BERAT', 
+    description: 'Burger yang besar dan isian yang banyak lengkap dengan sauce dan topingnya.', 
+    image: '/images/burger.jpg' 
+  },
+  { 
+    id: 116, 
+    name: 'JUS_JERUK_PERAS', 
+    price: 6, 
+    category: 'JUS_BUAH', 
+    description: 'Jeruk peras asli tanpa pemanis buatan, disajikan dingin menyegarkan.', 
+    image: '/images/jus_jeruk.jpg' 
+  }
+]);
   </script>
   
 <style scoped>
