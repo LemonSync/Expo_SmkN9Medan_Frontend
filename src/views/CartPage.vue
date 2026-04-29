@@ -7,8 +7,7 @@
         <h1 class="title">UNIT_PESANAN_S01</h1>
       </div>
       <router-link to="/menu" class="back-link bg-white">
-        [<-] KEMBALI_BELANJA
-      </router-link>
+        [<-] KEMBALI_BELANJA </router-link>
     </header>
 
     <div class="main-layout">
@@ -23,7 +22,7 @@
             <div class="item-img bg-black text-white">
               {{ item.name.substring(0, 1) }}
             </div>
-            
+
             <div class="item-info">
               <span class="item-id">ID: #{{ item.id }}</span>
               <h3 class="item-name">{{ item.name }}</h3>
@@ -47,7 +46,7 @@
       <aside class="summary-section">
         <div class="summary-card border-brutal bg-white">
           <h2 class="summary-title">TOTAL_RINGKASAN</h2>
-          
+
           <div class="summary-details">
             <div class="detail-row">
               <span>JUMLAH_UNIT</span>
@@ -68,7 +67,7 @@
             KONFIRMASI_PESANAN [->]
           </button>
         </div>
-        
+
         <div class="industrial-note bg-black text-white">
           <p>NOTE: PESANAN AKAN DIPROSES SECARA INSTAN OLEH SISTEM SMKN9.</p>
         </div>
@@ -114,7 +113,7 @@ const checkout = () => {
   --ketchup: #FF0000;
   --soda: #0051FF;
   --border: 5px solid var(--black);
-  
+
   min-height: 100vh;
   padding: 2rem;
   background-color: #f0f0f0;
@@ -128,7 +127,10 @@ const checkout = () => {
 
 .bg-grid {
   position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background-image: radial-gradient(var(--black) 1px, transparent 1px);
   background-size: 30px 30px;
   opacity: 0.1;
@@ -153,7 +155,11 @@ const checkout = () => {
   box-shadow: 8px 8px 0px var(--black);
 }
 
-.title { font-weight: 900; font-size: 2.5rem; margin: 0; }
+.title {
+  font-weight: 900;
+  font-size: 2.5rem;
+  margin: 0;
+}
 
 .back-link {
   border: var(--border);
@@ -185,18 +191,36 @@ const checkout = () => {
 }
 
 .item-img {
-  width: 80px; height: 80px;
+  width: 80px;
+  height: 80px;
   border: var(--border);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2rem; font-weight: 900;
+  font-size: 2rem;
+  font-weight: 900;
 }
 
-.item-info { flex-grow: 1; }
-.item-id { font-family: 'Space Mono', monospace; font-size: 0.8rem; opacity: 0.6; }
-.item-name { font-size: 1.5rem; font-weight: 900; margin: 0; }
-.item-price { font-weight: 800; color: var(--soda); }
+.item-info {
+  flex-grow: 1;
+}
+
+.item-id {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem;
+  opacity: 0.6;
+}
+
+.item-name {
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin: 0;
+}
+
+.item-price {
+  font-weight: 800;
+  color: var(--soda);
+}
 
 .item-actions {
   display: flex;
@@ -212,13 +236,19 @@ const checkout = () => {
 }
 
 .qty-btn {
-  width: 40px; height: 40px;
-  border: none; background: none;
-  font-size: 1.5rem; font-weight: 900;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: none;
+  font-size: 1.5rem;
+  font-weight: 900;
   cursor: pointer;
 }
 
-.qty-btn:hover { background: var(--mustard); }
+.qty-btn:hover {
+  background: var(--mustard);
+}
+
 .qty-num {
   padding: 0 15px;
   font-weight: 900;
@@ -229,7 +259,8 @@ const checkout = () => {
 .remove-btn {
   border: 3px solid var(--black);
   padding: 5px 15px;
-  color: black; font-weight: 900;
+  color: black;
+  font-weight: 900;
   cursor: pointer;
 }
 
@@ -241,7 +272,12 @@ const checkout = () => {
   top: 100px;
 }
 
-.summary-title { font-weight: 900; border-bottom: var(--border); padding-bottom: 1rem; margin-top: 0; }
+.summary-title {
+  font-weight: 900;
+  border-bottom: var(--border);
+  padding-bottom: 1rem;
+  margin-top: 0;
+}
 
 .detail-row {
   display: flex;
@@ -250,10 +286,20 @@ const checkout = () => {
   font-weight: 700;
 }
 
-.total { font-size: 1.5rem; font-weight: 900; }
-.total-amount { color: var(--ketchup); }
+.total {
+  font-size: 1.5rem;
+  font-weight: 900;
+}
 
-.brutal-hr { border: none; border-top: var(--border); margin: 1.5rem 0; }
+.total-amount {
+  color: var(--ketchup);
+}
+
+.brutal-hr {
+  border: none;
+  border-top: var(--border);
+  margin: 1.5rem 0;
+}
 
 .checkout-btn {
   width: 100%;
@@ -279,14 +325,34 @@ const checkout = () => {
   font-family: 'Space Mono', monospace;
 }
 
-.border-brutal { border: var(--border); }
+.border-brutal {
+  border: var(--border);
+}
 
 /* RESPONSIVE */
 @media (max-width: 1024px) {
-  .main-layout { grid-template-columns: 1fr; }
-  .summary-section { order: -1; } /* Summary muncul di atas pada mobile */
-  .item-card { flex-direction: column; text-align: center; }
-  .item-actions { align-items: center; width: 100%; }
-  .qty-control { width: 100%; justify-content: space-between; }
+  .main-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-section {
+    order: -1;
+  }
+
+  /* Summary muncul di atas pada mobile */
+  .item-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .item-actions {
+    align-items: center;
+    width: 100%;
+  }
+
+  .qty-control {
+    width: 100%;
+    justify-content: space-between;
+  }
 }
 </style>

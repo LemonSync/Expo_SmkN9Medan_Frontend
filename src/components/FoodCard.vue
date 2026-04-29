@@ -24,10 +24,7 @@
     </div>
 
     <div class="card-footer">
-      <button 
-        @click="$emit('add-to-cart', { id, name, price, description })" 
-        class="buy-button"
-      >
+      <button @click="$emit('add-to-cart', { id, name, price, description })" class="buy-button">
         TAMBAH_KE_KERANJANG [+]
       </button>
     </div>
@@ -54,6 +51,7 @@ defineEmits(['add-to-cart']);
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -68,21 +66,23 @@ defineEmits(['add-to-cart']);
   --lettuce: #615721;
   --soda: #0051FF;
   --border-width: 5px;
-  
+
   animation: fadeIn 0.5s ease;
   display: flex;
   flex-direction: column;
   background-color: var(--white);
   border: var(--border-width) solid var(--black);
-  
+
   /* Perbaikan Shadow: Gunakan shadow lebih kecil di layar kecil nanti */
-  box-shadow: 8px 8px 0px 0px var(--black); 
-  
+  box-shadow: 8px 8px 0px 0px var(--black);
+
   transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   font-family: 'Space Grotesk', sans-serif;
   height: 100%;
-  width: 100%; /* Pastikan ambil full width container */
-  box-sizing: border-box; /* WAJIB: agar border tidak nambah lebar */
+  width: 100%;
+  /* Pastikan ambil full width container */
+  box-sizing: border-box;
+  /* WAJIB: agar border tidak nambah lebar */
 }
 
 .card:hover {
@@ -157,7 +157,8 @@ defineEmits(['add-to-cart']);
   position: relative;
   overflow: hidden;
   border-bottom: 5px solid var(--black);
-  background-color: #e0e0e0; /* Warna dasar semen */
+  background-color: #e0e0e0;
+  /* Warna dasar semen */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -168,12 +169,14 @@ defineEmits(['add-to-cart']);
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: contrast(1.1) brightness(1.1); /* Efek brutal: kontras tinggi */
+  filter: contrast(1.1) brightness(1.1);
+  /* Efek brutal: kontras tinggi */
   transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .card:hover .product-img {
-  transform: scale(1.15) rotate(2deg); /* Efek zoom dan miring saat hover */
+  transform: scale(1.15) rotate(2deg);
+  /* Efek zoom dan miring saat hover */
 }
 
 /* Efek Overlay Sudut (Khas Viewfinder Kamera) */
@@ -187,13 +190,15 @@ defineEmits(['add-to-cart']);
 }
 
 .visual-overlay::before {
-  top: 15px; left: 15px;
+  top: 15px;
+  left: 15px;
   border-top: 4px solid var(--black);
   border-left: 4px solid var(--black);
 }
 
 .visual-overlay::after {
-  bottom: 15px; right: 15px;
+  bottom: 15px;
+  right: 15px;
   border-bottom: 4px solid var(--black);
   border-right: 4px solid var(--black);
 }
@@ -201,8 +206,10 @@ defineEmits(['add-to-cart']);
 /* Efek Noise/Tekstur (Opsional) */
 .image-noise {
   position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background-image: url("https://www.transparenttextures.com/patterns/carbon-fibre.png");
   opacity: 0.05;
   pointer-events: none;
@@ -244,33 +251,52 @@ defineEmits(['add-to-cart']);
 
 .buy-button:active {
   background-color: var(--soda);
-  transform: scale(0.98); /* Efek pencet */
+  transform: scale(0.98);
+  /* Efek pencet */
 }
 
 /* UTILITY CLASSES */
-.bg-black { background-color: var(--black); }
-.bg-white { background-color: var(--white); }
-.bg-mustard { background-color: var(--mustard); }
-.bg-ketchup { background-color: var(--ketchup); }
-.text-white { color: var(--white); }
+.bg-black {
+  background-color: var(--black);
+}
+
+.bg-white {
+  background-color: var(--white);
+}
+
+.bg-mustard {
+  background-color: var(--mustard);
+}
+
+.bg-ketchup {
+  background-color: var(--ketchup);
+}
+
+.text-white {
+  color: var(--white);
+}
 
 @media (max-width: 480px) {
   .card {
     /* Kurangi shadow agar tidak memotong space grid */
     box-shadow: 5px 5px 0px 0px var(--black);
-    border-width: 4px; /* Sedikit lebih tipis di mobile */
+    border-width: 4px;
+    /* Sedikit lebih tipis di mobile */
   }
 
   .card-visual {
-    height: 180px; /* Perkecil tinggi gambar di HP agar tidak menu-full */
+    height: 180px;
+    /* Perkecil tinggi gambar di HP agar tidak menu-full */
   }
 
   .product-name {
-    font-size: 1.1rem; /* Sesuaikan ukuran font */
+    font-size: 1.1rem;
+    /* Sesuaikan ukuran font */
   }
 
   .buy-button {
-    padding: 1rem; /* Tombol lebih ramping */
+    padding: 1rem;
+    /* Tombol lebih ramping */
     font-size: 0.9rem;
   }
 }
