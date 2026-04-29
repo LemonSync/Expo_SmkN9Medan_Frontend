@@ -172,7 +172,7 @@ const totalItems = computed(() => {
 /* MOBILE TOGGLE */
 .mobile-toggle {
   display: none;
-  color: var(--white);
+  color: black;
   border: none;
   border-left: var(--border-width) solid var(--black);
   padding: 0 2rem;
