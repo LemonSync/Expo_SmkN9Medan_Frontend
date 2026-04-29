@@ -41,7 +41,7 @@
               <circle cx="20" cy="21" r="1"></circle>
               <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
             </svg>
-        [+]
+        <p>[+]</p>
       </button>
     </div>
   </div>
@@ -247,7 +247,10 @@ defineEmits(['add-to-cart']);
 }
 
 .buy-button {
-  text-align: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   color: white;
   width: 100%;
   padding: 1.2rem;
