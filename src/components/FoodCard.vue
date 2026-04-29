@@ -247,6 +247,7 @@ defineEmits(['add-to-cart']);
 }
 
 .buy-button {
+  text-align: center;
   color: white;
   width: 100%;
   padding: 1.2rem;
