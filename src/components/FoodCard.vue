@@ -251,6 +251,7 @@ defineEmits(['add-to-cart']);
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  gap: 10px;
   color: white;
   width: 100%;
   padding: 1.2rem;
