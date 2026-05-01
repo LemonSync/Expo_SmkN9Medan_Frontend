@@ -1,0 +1,56 @@
+<template>
+  <div class="container">
+    <router-view v-slot="{ Component }">
+      <transition name="page-slide" mode="out-in">
+        <component :is="Component" />
+      </transition>
+    </router-view>
+  </div>
+</template>
+
+<style>
+
+.container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  margin: 0 auto;
+}
+
+/* Animasi Perpindahan Halaman */
+.page-slide-enter-active,
+.page-slide-leave-active {
+  transition: all 0.3s ease-out;
+}
+
+.page-slide-enter-from {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.page-slide-leave-to {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+/* Pastikan style dasar tetap ada jika belum dipindah ke file CSS terpisah */
+:root {
+  --bg: #fdf6e3;
+  --main: #2d3436;
+  --accent: #fdcb6e;
+  --secondary: #a29bfe;
+  --success: #55efc4;
+  --danger: #ff7675;
+  --white: #ffffff;
+}
+
+body {
+  background-color: var(--accent);
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  overflow-x: hidden;
+}
+</style>

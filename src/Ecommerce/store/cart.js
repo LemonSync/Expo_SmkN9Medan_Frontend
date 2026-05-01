@@ -19,5 +19,5 @@ export const addToCart = (product) => {
   } else {
     cart.value.push({ ...product, qty: 1 });
   }
-  alert(`BRUTAL! ${product.name} DITAMBAHKAN!`);
+  console.log(`BRUTAL! ${product.name} DITAMBAHKAN!`);
 };

@@ -1,5 +1,3 @@
-btw ini kurang responsive tampilannya untuk hp, coba diperbaiki
-
 <template>
   <div class="cart-page">
     <div class="bg-grid"></div>
@@ -118,8 +116,94 @@ btw ini kurang responsive tampilannya untuk hp, coba diperbaiki
   </div>
 </template>
 
+<script setup>
+import { computed, ref } from 'vue';
+import { cart } from '../store/cart.js';
+
+// --- STATES ---
+const isCheckingOut = ref(false);
+const customerData = ref({ name: '', phone: '' });
+const notif = ref({ show: false, message: '', type: 'success' });
+
+const totalPrice = computed(() => cart.value.reduce((acc, item) => acc + (item.price * item.qty), 0));
+const totalUnits = computed(() => cart.value.reduce((acc, item) => acc + item.qty, 0));
+
+const showNotif = (msg, type = 'success') => {
+  notif.value = { show: true, message: msg, type: type };
+};
+
+const updateQty = (id, change) => {
+  const item = cart.value.find(p => p.id === id);
+  if (item) {
+    item.qty += change;
+    if (item.qty <= 0) removeItem(id);
+  }
+};
+
+const removeItem = (id) => {
+  const index = cart.value.findIndex(item => item.id === id);
+  if (index !== -1) cart.value.splice(index, 1);
+};
+
+const openCheckoutModal = () => {
+  if (cart.value.length === 0) {
+    showNotif("KERANJANG MASIH KOSONG!", "error");
+    return;
+  }
+  isCheckingOut.value = true;
+};
+
+const processToBackend = async () => {
+  if (!customerData.value.name || !customerData.value.phone) {
+    showNotif("DATA TIDAK LENGKAP!", "error");
+    return;
+  }
+
+  const cartSummary = cart.value.map(item => ({
+    id: item.id,
+    name: item.name,
+    qty: item.qty,
+    subtotal: item.price * item.qty
+  }));
+
+  const payload = {
+    customer_name: customerData.value.name,
+    customer_phone: customerData.value.phone,
+    total_price: totalPrice.value,
+    order_items: JSON.stringify(cartSummary) 
+  };
+
+  try {
+    const response = await fetch('https://lemon-expo-backend.vercel.app/api/ecommerce/checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (response.ok) {
+      showNotif("PESANAN BERHASIL DISIMPAN KE DATABASE!", "success");
+      
+      cart.value = [];
+      isCheckingOut.value = false;
+      customerData.value = { name: '', phone: '' };
+      
+      localStorage.removeItem('cart_data');
+      
+    } else {
+      showNotif("GAGAL MENGIRIM DATA KE BACKEND.", "error");
+    }
+  } catch (err) {
+    console.error("Fetch Error:", err);
+    showNotif("KONEKSI SERVER GAGAL!", "error");
+  }
+};
+</script>
+
 <style scoped>
+
+
 .cart-page {
+  /* CSS Variables */
   --black: #000000;
   --white: #FFFFFF;
   --mustard: #FFDB00;
@@ -188,27 +272,10 @@ btw ini kurang responsive tampilannya untuk hp, coba diperbaiki
   font-weight: 900;
   box-shadow: var(--shadow-sm);
   transition: 0.2s;
+  white-space: nowrap;
 }
 
 .back-link:hover {
-  transform: translate(-3px, -3px);
-  box-shadow: 7px 7px 0px var(--black);
-  background: var(--lettuce);
-}
-
-.buy-link {
-  background: var(--black);
-  border: 1px solid white;
-  padding: 0.7rem 1rem;
-  text-decoration: none;
-  color: var(--white);
-  font-weight: 900;
-  box-shadow: var(--shadow-sm);
-  transition: 0.2s;
-}
-
-.buy-link:hover {
-  color: black;
   transform: translate(-3px, -3px);
   box-shadow: 7px 7px 0px var(--black);
   background: var(--lettuce);
@@ -230,6 +297,7 @@ btw ini kurang responsive tampilannya untuk hp, coba diperbaiki
   border: var(--border);
   display: flex;
   flex-direction: column;
+  gap: 10px;
   justify-content: space-between;
   align-items: center;
   padding: 2rem;
@@ -254,6 +322,7 @@ btw ini kurang responsive tampilannya untuk hp, coba diperbaiki
   justify-content: center;
   font-size: 2.2rem;
   font-weight: 900;
+  flex-shrink: 0;
 }
 
 .item-id {
@@ -320,6 +389,7 @@ btw ini kurang responsive tampilannya untuk hp, coba diperbaiki
   font-weight: 900;
   font-size: 0.8rem;
   cursor: pointer;
+  color: white;
 }
 
 /* --- SUMMARY SIDEBAR --- */
@@ -388,7 +458,7 @@ btw ini kurang responsive tampilannya untuk hp, coba diperbaiki
   justify-content: center;
   align-items: center;
   z-index: 2000;
-  padding: 20px;
+  padding: 1rem;
   backdrop-filter: blur(4px);
 }
 
@@ -397,21 +467,27 @@ btw ini kurang responsive tampilannya untuk hp, coba diperbaiki
   max-width: 500px;
   background: var(--white);
   box-shadow: 20px 20px 0px var(--soda);
+  border: var(--border);
 }
 
 .modal-header {
   padding: 1rem;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  background: var(--black);
+  color: white;
   border-bottom: var(--border);
 }
 
 .close-x {
-  background: none;
-  border: none;
+  background: white;
+  border: 3px solid black;
   color: black;
   font-weight: 900;
-  font-size: 20px;
+  font-size: 16px;
+  width: 30px;
+  height: 30px;
   cursor: pointer;
 }
 
@@ -459,18 +535,8 @@ btw ini kurang responsive tampilannya untuk hp, coba diperbaiki
   background: var(--mustard);
 }
 
-.process-btn:active,
-.close-notif-btn:active {
-  transform: translate(4px, 4px);
-  box-shadow: none;
-}
-
-/* Notification Modal Elements */
-.notification-body {
-  text-align: center;
-}
-
 .status-icon {
+  text-align: center;
   font-size: 4rem;
   margin-bottom: 1rem;
   color: black;
@@ -480,68 +546,113 @@ btw ini kurang responsive tampilannya untuk hp, coba diperbaiki
   font-weight: 900;
   margin-bottom: 2rem;
   text-transform: uppercase;
-}
-
-/* --- UTILS --- */
-.border-brutal {
-  border: var(--border);
-}
-
-.text-lettuce {
-  color: var(--lettuce);
-  font-weight: 900;
+  text-align: center;
 }
 
 .empty-card {
   padding: 10px;
 }
 
-/* --- RESPONSIVE --- */
+/* --- RESPONSIVE OPTIMIZATION --- */
 @media (max-width: 1100px) {
   .main-layout {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
 
   .summary-section {
     order: -1;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
   }
 
   .summary-card {
     position: static;
-    transform: rotate(1deg);
+    transform: none;
   }
 }
 
 @media (max-width: 600px) {
   .cart-page {
     padding: 1rem;
+    --shadow: 5px 5px 0px var(--black);
+    --shadow-lg: 8px 8px 0px var(--black);
+  }
+
+  .cart-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .header-box {
+    transform: none;
+    padding: 0.8rem;
+    text-align: center;
+  }
+
+  .back-link {
+    text-align: center;
+    padding: 0.8rem;
   }
 
   .item-card {
     flex-direction: column;
     align-items: flex-start;
-    padding: 1.5rem;
+    padding: 1.2rem;
   }
 
   .item-main-info {
-    flex-direction: column;
-    align-items: flex-start;
     gap: 1rem;
     width: 100%;
+  }
+
+  .item-img {
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+  }
+
+  .item-name {
+    font-size: 1.3rem;
   }
 
   .item-actions {
     width: 100%;
     flex-direction: row;
     justify-content: space-between;
-    margin-top: 1.5rem;
-    border-top: 3px solid #000;
-    padding-top: 1.2rem;
+    align-items: center;
+    margin-top: 1.2rem;
+    padding-top: 1rem;
+    border-top: 3px dashed var(--black);
   }
 
-  .cart-header {
-    flex-direction: column;
+  .qty-control {
+    height: 40px;
+  }
+
+  .qty-btn {
+    width: 35px;
+  }
+
+  .qty-num {
+    padding: 0 10px;
+  }
+
+  .summary-card {
+    padding: 1.5rem;
+  }
+
+  .modal-content {
+    box-shadow: 10px 10px 0px var(--soda);
+  }
+
+  .modal-body {
+    padding: 1.5rem 1rem;
   }
 }
+
+/* Utils */
+.border-brutal { border: var(--border); }
+.text-lettuce { color: var(--lettuce); font-weight: 900; }
 </style>

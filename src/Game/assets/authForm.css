@@ -1,0 +1,61 @@
+.auth-title {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  font-weight: 800;
+  font-size: 0.8rem;
+  margin-bottom: 5px;
+  letter-spacing: 1px;
+}
+
+.btn-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-login {
+  background: var(--main);
+  color: var(--white);
+  box-shadow: 6px 6px 0px var(--danger);
+}
+
+.btn-login:hover {
+  box-shadow: 8px 8px 0px var(--danger);
+}
+
+.btn-login:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 4px 4px 0px var(--main);
+}
+
+.btn-text {
+  background: none;
+  border: none;
+  color: var(--main);
+  font-size: 0.9rem;
+  text-decoration: underline;
+  box-shadow: none;
+  width: auto;
+  margin: 0 auto;
+  display: block;
+}
+
+.btn-text:hover {
+  transform: scale(1.05);
+  color: var(--secondary);
+}
+
+/* Responsif */
+@media (max-width: 400px) {
+  .card { padding: 20px; }
+}

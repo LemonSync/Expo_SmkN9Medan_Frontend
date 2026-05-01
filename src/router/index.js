@@ -1,63 +1,127 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-// 1. Import Views (Halaman Utama)
-import LandingPage from "../views/LandingPage.vue";
-import MenuPage from "../views/MenuPage.vue";
-import CartPage from "@/views/CartPage.vue";
+// --- 1. LAYOUT / PARENT COMPONENTS ---
+// Root (Halaman pilihan materi)
+import AppPortal from "@/App.vue"; 
 
-// 2. Definisi Route
+// Wrapper untuk Ecommerce (Tempat Navbar Toko berada)
+import EcommerceLayout from "@/Ecommerce/Ecommerce.vue"; 
+
+// Wrapper untuk Game (Bisa polos atau untuk Navbar Game)
+import GameLayout from "@/Game/Game.vue";
+
+// --- 2. ECOMMERCE CHILDREN VIEWS ---
+import LandingPageE from "@/Ecommerce/views/LandingPageE.vue";
+import MenuPageE from "@/Ecommerce/views/MenuPageE.vue";
+import CartPageE from "@/Ecommerce/views/CartPageE.vue";
+import DashE from "@/Ecommerce/views/DashE.vue";
+
+// --- 3. GAME CHILDREN VIEWS ---
+import LandingPageG from "@/Game/view/LandingPageG.vue";
+import AuthFormG from "@/Game/view/AuthFormG.vue";
+import GamePlayG from "@/Game/view/GamePlayG.vue";
+import LeaderboardG from "@/Game/view/LeaderboardG.vue";
+
 const routes = [
+  // ==========================================
+  // PORTAL UTAMA (ROOT)
+  // ==========================================
   {
     path: "/",
-    name: "Landing",
-    component: LandingPage,
-    meta: {
-      title: "SMKN9_SHOP | HOME",
-      transition: "brutal-slide",
-    },
+    name: "Portal",
+    component: AppPortal,
+    meta: { title: "EXPO | PILIH MATERI" }
   },
+
+  // ==========================================
+  // MODUL ECOMMERCE (Nested)
+  // ==========================================
   {
-    path: "/menu",
-    name: "Menu",
-    component: MenuPage,
-    meta: {
-      title: "SMKN9_SHOP | KATALOG_MENU",
-      transition: "brutal-slide",
-    },
+    path: "/ecommerce",
+    component: EcommerceLayout, // Induk yang merender AppNavbar Ecommerce
+    children: [
+      {
+        path: "", // URL: /ecommerce
+        name: "Ecommerce_Home",
+        component: LandingPageE,
+        meta: { title: "SHOP | LANDING", transition: "brutal-slide" }
+      },
+      {
+        path: "menu", // URL: /ecommerce/menu
+        name: "Ecommerce_Menu",
+        component: MenuPageE,
+        meta: { title: "SHOP | MENU" }
+      },
+      {
+        path: "cart", // URL: /ecommerce/cart
+        name: "Ecommerce_Cart",
+        component: CartPageE,
+        meta: { title: "SHOP | KERANJANG" }
+      },
+      {
+        path: "dash", // URL: /ecommerce/dash
+        name: "Ecommerce_Dash",
+        component: DashE,
+        meta: { title: "SHOP | DASHBOARD" }
+      }
+    ]
   },
+
+  // ==========================================
+  // MODUL GAME (Nested)
+  // ==========================================
   {
-    path: "/cart",
-    name: "Cart",
-    component: CartPage,
-    meta: {
-      title: "SMKN9_SHOP | KERANJANG_KAMU",
-      transition: "brutal-slide",
-    },
+    path: "/game",
+    component: GameLayout, // Induk untuk modul Game
+    children: [
+      {
+        path: "", // URL: /game
+        name: "Game_Home",
+        component: LandingPageG,
+        meta: { title: "GAME | LANDING" }
+      },
+      {
+        path: "auth", // URL: /game/auth
+        name: "Game_Auth",
+        component: AuthFormG,
+        meta: { title: "GAME | LOGIN" }
+      },
+      {
+        path: "play", // URL: /game/play
+        name: "Game_Play",
+        component: GamePlayG,
+        meta: { title: "GAME | PLAYING" }
+      },
+      {
+        path: "leaderboard", // URL: /game/leaderboard
+        name: "Game_Leaderboard",
+        component: LeaderboardG,
+        meta: { title: "GAME | RANKING" }
+      }
+    ]
   },
-  // Catch-all (404) diarahkan kembali ke Home atau halaman khusus
+
+  // ==========================================
+  // 404 - REDIRECT TO ROOT
+  // ==========================================
   {
     path: "/:pathMatch(.*)*",
     redirect: "/",
   },
 ];
 
-// 3. Inisialisasi Router
 const router = createRouter({
   history: createWebHistory(),
   routes,
-  // Memastikan setiap pindah halaman, posisi scroll kembali ke atas (kaku)
+  // Otomatis scroll ke atas setiap pindah halaman
   scrollBehavior(to, from, savedPosition) {
-    if (savedPosition) {
-      return savedPosition;
-    } else {
-      return { top: 0 };
-    }
+    return savedPosition || { top: 0 };
   },
 });
 
-// 4. Navigation Guard untuk Mengubah Judul Tab Browser
+// Navigation Guard untuk Title Tab Browser
 router.beforeEach((to, from, next) => {
-  document.title = to.meta.title || "BRUTAL_EATS";
+  document.title = to.meta.title || "EXPO_APP";
   next();
 });
 

@@ -1,39 +1,29 @@
 <template>
   <nav class="navbar">
     <div class="nav-brand">
-      <router-link to="/" class="logo">
+      <router-link to="/ecommerce" class="logo">
         SMKN9_<span class="outline-text">SHOP</span>
       </router-link>
     </div>
 
     <div class="nav-links" :class="{ 'is-active': isMenuOpen }">
-      <router-link to="/" class="nav-item" @click="isMenuOpen = false">
+      <router-link to="/ecommerce" class="nav-item" @click="isMenuOpen = false">
         <span class="nav-text">HOME</span>
       </router-link>
-      <router-link to="/menu" class="nav-item" @click="isMenuOpen = false">
+      <router-link to="/ecommerce/menu" class="nav-item" @click="isMenuOpen = false">
         <span class="nav-text">MENU_KATALOG</span>
       </router-link>
 
       <div class="cart-box">
-        <router-link to="/cart" class="nav-item cart-link" @click="isMenuOpen = false">
+        <router-link to="/ecommerce/cart" class="nav-item cart-link" @click="isMenuOpen = false">
           <div class="cart-wrapper">
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              width="24" 
-              height="24" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="currentColor" 
-              stroke-width="3" 
-              stroke-linecap="square" 
-              stroke-linejoin="miter" 
-              class="cart-icon"
-            >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter" class="cart-icon">
               <circle cx="9" cy="21" r="1"></circle>
               <circle cx="20" cy="21" r="1"></circle>
               <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
             </svg>
-            
+
             <span class="cart-label">CART</span>
             <span class="cart-badge text-lettuce">{{ totalItems }}</span>
           </div>
@@ -255,7 +245,7 @@ const totalItems = computed(() => {
     border-left: none;
     justify-content: flex-start;
   }
-  
+
   .cart-icon {
     width: 22px;
     height: 22px;

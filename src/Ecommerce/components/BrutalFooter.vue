@@ -14,9 +14,9 @@
       <div class="footer-col links-col">
         <div class="link-group">
           <h4 class="col-label">DIREKTORI</h4>
-          <router-link to="/">BERANDA</router-link>
-          <router-link to="/menu">KATALOG_MENU</router-link>
-          <router-link to="/about">TENTANG_KAMI</router-link>
+          <router-link to="/ecommerce">BERANDA</router-link>
+          <router-link to="/ecommerce/menu">KATALOG_MENU</router-link>
+          <router-link to="/ecommerce/about">TENTANG_KAMI</router-link>
         </div>
         <div class="link-group">
           <h4 class="col-label">SOSIAL</h4>

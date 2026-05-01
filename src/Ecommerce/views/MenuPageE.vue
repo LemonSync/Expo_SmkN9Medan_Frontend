@@ -37,13 +37,25 @@
 
         <FoodCard v-for="product in filteredProducts" :key="product.id" :id="product.id" :name="product.name"
           :price="product.price" :description="product.description" v-bind="product"
-          @add-to-cart="addToCart(product)" />
+          @add-to-cart="handleAddToCart(product)" />
 
         <div v-if="filteredProducts.length === 0" class="no-results">
           TIDAK_ADA_HASIL_DITEMUKAN_[-]
         </div>
       </main>
     </div>
+
+    <Transition name="fade">
+      <div v-if="notif.show" class="modal-overlay">
+        <div class="modal-content-notif border-brutal bg-white">
+          <div class="modal-body-notif">
+            <div class="status-icon">✔</div>
+            <p class="modal-text">{{ notif.message }}</p>
+            <button @click="notif.show = false" class="close-notif-btn">OKE_MANTAP</button>
+          </div>
+        </div>
+      </div>
+    </Transition>
 
     <BrutalFooter />
   </div>
@@ -54,178 +66,38 @@ import { ref, computed } from 'vue';
 import FoodCard from '../components/FoodCard.vue';
 import BrutalFooter from '../components/BrutalFooter.vue';
 import { addToCart } from '../store/cart.js';
+import products from '../data/product';
 
-// 1. DATA MASTER (Simulasi data dari database/API)
-const products = ref([
-  // MAKANAN_BERAT
-  {
-    id: 101,
-    name: 'NASI_AYAM_GEPREK',
-    price: 10,
-    category: 'MAKANAN_BERAT',
-    description: 'Nasi hangat dengan ayam goreng tepung yang dipenyet sambal bawang.',
-    image: '/images/nasi_ayam_geprek.jpg'
-  },
-  {
-    id: 110,
-    name: 'BURGER',
-    price: 10,
-    category: 'MAKANAN_BERAT',
-    description: 'Burger yang besar dan isian yang banyak lengkap dengan sauce dan topingnya.',
-    image: '/images/burger.jpg'
-  },
-  {
-    id: 111,
-    name: 'NASI_GORENG',
-    price: 10,
-    category: 'MAKANAN_BERAT',
-    description: 'Nasi goreng yang nikmat dan gurih, pas dijadiin santapan saat jam istirahat.',
-    image: '/images/nasi_goreng.jpg'
-  },
-  {
-    id: 104,
-    name: 'MIE_AYAM_BAKSO',
-    price: 12,
-    category: 'MAKANAN_BERAT',
-    description: 'Ini enak banget rek, ASELI CUY, Siapa coba yang gak ngiler kalo nyium wangi mie ayam bakso.',
-    image: '/images/mie_ayam_bakso.jpg'
-  },
-  {
-    id: 107,
-    name: 'NASI_KUNING_LENGKAP',
-    price: 10,
-    category: 'MAKANAN_BERAT',
-    description: 'Nasi kuning dengan irisan telur dadar, tempe orek, dan sambal.',
-    image: '/images/nasi_kuning.jpg'
-  },
+// --- STATE UNTUK MODAL ---
+const notif = ref({ show: false, message: '' });
 
-  // SNACK_KERAS
-  {
-    id: 102,
-    name: 'KERIPIK_SINGKONG_PEDAS',
-    price: 5,
-    category: 'SNACK_KERAS',
-    description: 'Keripik singkong potong tipis dengan bumbu pedas manis yang garing.',
-    image: '/images/keripik_singkong.jpg'
-  },
-  {
-    id: 105,
-    name: 'KACANG_ATOM',
-    price: 3,
-    category: 'SNACK_KERAS',
-    description: 'Kacang tanah berbalut tepung renyah dengan rasa gurih manis.',
-    image: '/images/kacang_atom.jpg'
-  },
-  {
-    id: 108,
-    name: 'MAKARONI_GORENG',
-    price: 5,
-    category: 'SNACK_KERAS',
-    description: 'Makaroni kering goreng yang sangat renyah dengan bumbu asin gurih.',
-    image: '/images/makaroni_goreng.jpg'
-  },
-
-  // MINUMAN_SODA
-  {
-    id: 103,
-    name: 'SODA_GEMBIRA',
-    price: 8,
-    category: 'MINUMAN_SODA',
-    description: 'Perpaduan air soda, sirup merah, dan susu kental manis yang segar.',
-    image: '/images/soda.jpg'
-  },
-  {
-    id: 106,
-    name: 'ES_TIMUN_SODA',
-    price: 7,
-    category: 'MINUMAN_SODA',
-    description: 'Timun segar dicampur dengan soda dan sirup melon.',
-    image: '/images/es_timun_soda.jpg'
-  },
-  {
-    id: 109,
-    name: 'COLA_DINGIN',
-    price: 6,
-    category: 'MINUMAN_SODA',
-    description: 'Minuman cola berkarbonasi yang disajikan dingin dari lemari es.',
-    image: '/images/cola_dingin.jpg'
-  },
-
-  // JUS BUAH
-  // JUS_BUAH
-  {
-    id: 116,
-    name: 'JUS_ALPUKAT_KENTAL',
-    price: 6,
-    category: 'JUS_BUAH',
-    description: 'Jus alpukat mentega dengan topping kental manis cokelat di pinggiran gelas.',
-    image: '/images/jus_alpukat.jpg'
-  },
-  {
-    id: 117,
-    name: 'JUS_MANGGA_SEGAR',
-    price: 10,
-    category: 'JUS_BUAH',
-    description: 'Mangga harum manis segar yang diblender halus dengan sedikit es batu.',
-    image: '/images/jus_mangga.jpg'
-  },
-  {
-    id: 118,
-    name: 'JUS_JAMBU_BIJI',
-    price: 6,
-    category: 'JUS_BUAH',
-    description: 'Jambu biji merah pilihan yang kaya vitamin C, disaring halus tanpa biji.',
-    image: '/images/jus_jambu.jpg'
-  },
-  {
-    id: 119,
-    name: 'JUS_JERUK_PERAS',
-    price: 6,
-    category: 'JUS_BUAH',
-    description: 'Jeruk peras asli tanpa pemanis buatan, disajikan dingin menyegarkan.',
-    image: '/images/jus_jeruk.jpg'
-  },
-  {
-    id: 120,
-    name: 'JUS_NAGA_MERAH',
-    price: 6,
-    category: 'JUS_BUAH',
-    description: 'Buah naga merah segar yang memberikan warna alami dan tekstur lembut.',
-    image: '/images/jus_buah_naga.jpg'
-  },
-  {
-    id: 121,
-    name: 'JUS_SIRSAK_MANIS',
-    price: 6,
-    category: 'JUS_BUAH',
-    description: 'Daging buah sirsak yang asam manis, cocok untuk melepas dahaga siang hari.',
-    image: '/images/jus_sirsak.jpg'
-  }
-]);
-
-// 2. STATE UNTUK FILTER
+// --- STATE UNTUK FILTER ---
 const categories = ['SEMUA_MENU', 'MAKANAN_BERAT', 'SNACK_KERAS', 'MINUMAN_SODA', 'JUS_BUAH'];
 const activeCategory = ref('SEMUA_MENU');
 const searchQuery = ref('');
 const sortBy = ref('low');
 
-// 3. LOGIC FILTERING & SORTING
+// --- LOGIC ADD TO CART (Ganti alert ke Modal) ---
+const handleAddToCart = (product) => {
+  addToCart(product); // Panggil fungsi store
+  notif.value.message = `${product.name.replace(/_/g, ' ')} BERHASIL DITAMBAHKAN!`;
+  notif.value.show = true;
+};
+
+// --- LOGIC FILTERING & SORTING ---
 const filteredProducts = computed(() => {
   let result = products.value;
 
-  // Filter Kategori
   if (activeCategory.value !== 'SEMUA_MENU') {
     result = result.filter(p => p.category === activeCategory.value);
   }
 
-  // Filter Search
   if (searchQuery.value) {
     result = result.filter(p =>
       p.name.toLowerCase().includes(searchQuery.value.toLowerCase())
     );
   }
 
-  // Sorting Harga
   result = [...result].sort((a, b) => {
     return sortBy.value === 'low' ? a.price - b.price : b.price - a.price;
   });
@@ -235,6 +107,7 @@ const filteredProducts = computed(() => {
 </script>
 
 <style scoped>
+/* --- ANIMATIONS (Original) --- */
 @keyframes fadeIn {
   to {
     opacity: 1;
@@ -271,13 +144,14 @@ const filteredProducts = computed(() => {
   animation: fadeRight 0.5s ease forwards;
 }
 
+/* --- MAIN PAGE STYLE (Original) --- */
 .menu-page {
-  /* Variabel Palet Utama */
   --black: #000000;
   --white: #FFFFFF;
   --mustard: #FFDB00;
   --ketchup: #FF0000;
   --soda: #0051FF;
+  --lettuce: #00FF47;
   --line: 5px solid var(--black);
   animation: fadeIn 0.1s ease;
   min-height: 100vh;
@@ -293,7 +167,6 @@ const filteredProducts = computed(() => {
   padding: 0;
 }
 
-/* 1. BACKGROUND IMAGE (WATERMARK STYLE) */
 .menu-page::before {
   content: "";
   position: fixed;
@@ -302,12 +175,10 @@ const filteredProducts = computed(() => {
   width: 100%;
   height: 100%;
   background-image: url('../assets/cafe.jpg');
-  /* Ganti dengan path gambarmu */
   opacity: 50%;
   z-index: -1;
 }
 
-/* 2. AKSESORIS: CORNER ACCENT */
 .corner-accent {
   position: fixed;
   top: 0;
@@ -332,7 +203,6 @@ const filteredProducts = computed(() => {
   transform: rotate(-45deg);
 }
 
-/* 3. HEADER AREA */
 .menu-header {
   width: 100%;
   box-sizing: border-box;
@@ -341,13 +211,9 @@ const filteredProducts = computed(() => {
   align-items: center;
   padding: 3rem 4rem;
   border-bottom: var(--line);
-
-  /* Tambahkan ini */
-  backdrop-filter: blur(1px);
-  -webkit-backdrop-filter: blur(10px);
-  /* Dukungan untuk Safari */
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   background-color: rgba(255, 255, 255, 0.5);
-  /* Warna transparan agar efek blur terlihat */
   position: relative;
   z-index: 2;
 }
@@ -357,7 +223,6 @@ const filteredProducts = computed(() => {
   font-size: 2rem;
   font-weight: 900;
   letter-spacing: -2px;
-  /* Stroke untuk mempertegas gaya poster */
   -webkit-text-stroke: 1.5px var(--black);
   margin: 0;
   opacity: 0;
@@ -382,12 +247,10 @@ const filteredProducts = computed(() => {
   box-shadow: 12px 12px 0px var(--black);
 }
 
-/* 4. MAIN LAYOUT & SIDEBAR */
 .menu-container {
   display: grid;
   grid-template-columns: 300px 1fr;
   width: 100%;
-  border-top: none;
 }
 
 .sidebar {
@@ -395,7 +258,6 @@ const filteredProducts = computed(() => {
   border-right: var(--line);
   padding: 3rem;
   background-color: #f9f9f9;
-  /* Pola Titik Industrial */
   background-image: radial-gradient(var(--black) 1px, transparent 1px);
   background-size: 20px 20px;
 }
@@ -413,7 +275,6 @@ const filteredProducts = computed(() => {
   padding: 2px 10px;
 }
 
-/* 5. FILTER ELEMENTS */
 .filter-section {
   margin-bottom: 3rem;
 }
@@ -443,7 +304,7 @@ const filteredProducts = computed(() => {
   font-weight: 800;
   cursor: pointer;
   padding: 5px 0;
-  transition: 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: 0.2s;
 }
 
 .filter-list li:hover {
@@ -457,7 +318,6 @@ const filteredProducts = computed(() => {
   text-decoration-thickness: 4px;
   transform: translateX(10px);
   font-weight: 900;
-
 }
 
 .brutal-select {
@@ -472,13 +332,12 @@ const filteredProducts = computed(() => {
   animation: fadeRight 0.5s ease forwards;
 }
 
-/* 6. PRODUCT GRID & FLOATING DECO */
 .product-grid {
   display: grid;
-  /* Desktop default */
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 2rem;
   padding: 2rem;
+  position: relative;
 }
 
 .floating-sticker {
@@ -505,19 +364,71 @@ const filteredProducts = computed(() => {
   background: rgba(255, 255, 255, 0.8);
 }
 
+/* --- MODAL STYLES (Tambahan Baru) --- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  backdrop-filter: blur(5px);
+}
+
+.modal-content-notif {
+  width: 90%;
+  max-width: 400px;
+  background-color: white;
+  padding: 2.5rem;
+  box-shadow: 15px 15px 0px var(--lettuce);
+  text-align: center;
+}
+
+.status-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  font-weight: 900;
+}
+
+.modal-text {
+  font-weight: 900;
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+}
+
+.close-notif-btn {
+  width: 100%;
+  padding: 1.2rem;
+  background: var(--mustard);
+  border: 5px solid var(--black);
+  font-weight: 950;
+  box-shadow: 6px 6px 0px var(--black);
+  cursor: pointer;
+  transition: 0.1s;
+}
+
+.close-notif-btn:active {
+  transform: translate(4px, 4px);
+  box-shadow: none;
+}
+
+.border-brutal {
+  border: 5px solid var(--black);
+}
+
+/* --- RESPONSIVE --- */
 @media (max-width: 600px) {
   .product-grid {
     grid-template-columns: 100% !important;
-    /* Paksa satu kolom penuh */
-    gap: 2rem;
     padding: 1rem;
-    /* Padding dikecilkan agar kartu punya ruang lebar */
-    justify-items: center;
-    /* Kartu di tengah */
   }
 }
 
-/* 7. RESPONSIVE DESIGN */
 @media (max-width: 1024px) {
   .menu-container {
     grid-template-columns: 1fr;
@@ -544,5 +455,16 @@ const filteredProducts = computed(() => {
   .sidebar-tag {
     display: none;
   }
+}
+
+/* Vue Transition */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
