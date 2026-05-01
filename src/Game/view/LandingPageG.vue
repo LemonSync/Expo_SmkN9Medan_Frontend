@@ -107,6 +107,7 @@ const goToAuth = () => router.push('/game/auth')
   width: 100%;
   background-color: var(--accent); /* Menggunakan warna kuning dari global */
   min-height: 100vh;
+  z-index: 500;
 }
 
 /* --- NAVBAR --- */
