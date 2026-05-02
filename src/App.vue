@@ -52,12 +52,12 @@
                 <input v-model="guestData.nama" type="text" placeholder="NAMA_LENGKAP..." class="brutal-input">
               </div>
               <div class="input-group">
-                <label>PESAN</label>
-                <textarea v-model="guestData.pesan" placeholder="TULIS_SESUATU..." class="brutal-input"></textarea>
-              </div>
-              <div class="input-group">
                 <label>INSTANSI</label>
                 <input v-model="guestData.instansi" type="text" placeholder="SMKN 9 MEDAN..." class="brutal-input">
+              </div>
+              <div class="input-group">
+                <label>PESAN</label>
+                <textarea v-model="guestData.pesan" placeholder="TULIS_SESUATU..." class="brutal-input"></textarea>
               </div>
               <button @click="kirimPesan" class="send-btn bg-ketchup text-white" :disabled="loading">
                 {{ loading ? 'SENDING...' : 'KIRIM_DATA [→]' }}
