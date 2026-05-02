@@ -30,7 +30,7 @@ const routes = [
     path: "/",
     name: "Portal",
     component: AppPortal,
-    meta: { title: "EXPO | PILIH MATERI" }
+    meta: { title: "EXPO | BUKU TAMU" }
   },
 
   // ==========================================
