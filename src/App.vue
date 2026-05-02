@@ -71,7 +71,7 @@
             <div class="scroll-area">
               <div v-for="g in guests" :key="g.id" class="guest-item">
                 <div class="guest-meta">
-                    <div style="display: flex; flex-direction: coloum;">
+                    <div style="display: flex; flex-direction: column;">
                       <span class="guest-name">@{{ g.nama }}</span>
                       <span class="guest-instansi">{{ g.instansi }}</span>
                     </div>
