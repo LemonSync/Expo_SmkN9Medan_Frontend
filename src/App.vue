@@ -55,6 +55,10 @@
                 <label>PESAN</label>
                 <textarea v-model="guestData.pesan" placeholder="TULIS_SESUATU..." class="brutal-input"></textarea>
               </div>
+              <div class="input-group">
+                <label>INSTANSI</label>
+                <textarea v-model="guestData.instansi" placeholder="SMKN 9 MEDAN..." class="brutal-input"></textarea>
+              </div>
               <button @click="kirimPesan" class="send-btn bg-ketchup text-white" :disabled="loading">
                 {{ loading ? 'SENDING...' : 'KIRIM_DATA [→]' }}
               </button>
@@ -63,7 +67,7 @@
 
           <!-- List -->
           <div class="guest-list border-brutal bg-black text-white">
-            <div class="list-header bg-white text-black">PENGUNJUNG_AKTIF [{{ guests.length }}]</div>
+            <div class="list-header bg-white text-black">PENGUNJUNG [{{ guests.length }}]</div>
             <div class="scroll-area">
               <div v-for="g in guests" :key="g.id" class="guest-item">
                 <div class="guest-meta">
@@ -90,7 +94,7 @@ import { ref, onMounted } from 'vue';
 const API_URL = 'https://lemon-expo-backend.vercel.app/api/ecommerce/guest-book';
 const guests = ref([]);
 const loading = ref(false);
-const guestData = ref({ nama: '', pesan: '' });
+const guestData = ref({ nama: '', pesan: '', instansi: '' });
 
 const ambilBukuTamu = async () => {
   try {
@@ -110,7 +114,7 @@ const kirimPesan = async () => {
       body: JSON.stringify(guestData.value)
     });
     if (response.ok) {
-      guestData.value = { nama: '', pesan: '' };
+      guestData.value = { nama: '', pesan: '', instansi: '' };
       await ambilBukuTamu();
     }
   } catch (e) { alert("GAGAL MENGIRIM"); }
