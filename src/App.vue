@@ -57,7 +57,7 @@
               </div>
               <div class="input-group">
                 <label>INSTANSI</label>
-                <textarea v-model="guestData.instansi" placeholder="SMKN 9 MEDAN..." class="brutal-input"></textarea>
+                <input v-model="guestData.instansi" type="text" placeholder="SMKN 9 MEDAN..." class="brutal-input">
               </div>
               <button @click="kirimPesan" class="send-btn bg-ketchup text-white" :disabled="loading">
                 {{ loading ? 'SENDING...' : 'KIRIM_DATA [→]' }}
