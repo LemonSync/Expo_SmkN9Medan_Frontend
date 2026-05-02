@@ -7,7 +7,7 @@
       <div class="header-box bg-mustard">
         <h1 class="title">UNIT_PESANAN_S01</h1>
       </div>
-      <router-link to="/" class="back-link bg-white">
+      <router-link to="/ecommerce" class="back-link bg-white">
         [←] KEMBALI
       </router-link>
     </header>
