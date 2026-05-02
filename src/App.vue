@@ -71,7 +71,10 @@
             <div class="scroll-area">
               <div v-for="g in guests" :key="g.id" class="guest-item">
                 <div class="guest-meta">
-                  <span class="guest-name">@{{ g.nama }}</span>
+                    <div style="display: flex; flex-direction: coloum;">
+                      <span class="guest-name">@{{ g.nama }}</span>
+                      <span class="guest-instansi">{{ g.instansi }}</span>
+                    </div>
                   <span class="guest-date">{{ formatTanggal(g.created_at) }}</span>
                 </div>
                 <p class="guest-msg">"{{ g.pesan }}"</p>
@@ -114,7 +117,7 @@ const kirimPesan = async () => {
       body: JSON.stringify(guestData.value)
     });
     if (response.ok) {
-      guestData.value = { nama: '', pesan: '', instansi: '' };
+      guestData.value = { nama: '', pesan: '', instansi: 'None' };
       await ambilBukuTamu();
     }
   } catch (e) { alert("GAGAL MENGIRIM"); }
@@ -218,6 +221,7 @@ textarea { min-height: 120px; resize: none; }
 .guest-item { background: #1a1a1a; margin-bottom: 1rem; padding: 1rem; border: 2px solid #333; }
 .guest-meta { display: flex; justify-content: space-between; margin-bottom: 8px; border-bottom: 1px solid #333; padding-bottom: 5px; }
 .guest-name { color: var(--lettuce); font-weight: 900; font-size: 0.85rem; }
+.guest-instansi { color: yellow; font-weight: 900; font-size: 0.50rem; }
 .guest-date { font-size: 0.65rem; color: #888; }
 .guest-msg { margin: 0; line-height: 1.4; color: #eee; font-size: 0.85rem; }
 
