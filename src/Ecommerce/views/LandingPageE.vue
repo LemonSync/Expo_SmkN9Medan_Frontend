@@ -93,7 +93,7 @@
           </div>
 
           <div class="sample-footer">
-            <router-link to="/menu" class="mini-btn">
+            <router-link to="/ecommerce/menu" class="mini-btn">
               LIHAT_DETAIL_MENU [+]
             </router-link>
           </div>
@@ -120,7 +120,7 @@
           </div>
 
           <div class="sample-footer">
-            <router-link to="/menu" class="mini-btn">
+            <router-link to="/ecommerce/menu" class="mini-btn">
               LIHAT_DETAIL_MENU [+]
             </router-link>
           </div>
@@ -147,7 +147,7 @@
           </div>
 
           <div class="sample-footer">
-            <router-link to="/menu" class="mini-btn">
+            <router-link to="/ecommerce/menu" class="mini-btn">
               LIHAT_DETAIL_MENU [+]
             </router-link>
           </div>
