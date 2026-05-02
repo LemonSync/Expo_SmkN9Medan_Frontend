@@ -94,7 +94,7 @@ import { ref, onMounted } from 'vue';
 const API_URL = 'https://lemon-expo-backend.vercel.app/api/ecommerce/guest-book';
 const guests = ref([]);
 const loading = ref(false);
-const guestData = ref({ nama: '', pesan: '', instansi: '' });
+const guestData = ref({ nama: '', pesan: '', instansi: 'None' });
 
 const ambilBukuTamu = async () => {
   try {
