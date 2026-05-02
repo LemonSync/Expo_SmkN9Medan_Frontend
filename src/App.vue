@@ -72,7 +72,7 @@
               <div v-for="g in guests" :key="g.id" class="guest-item">
                 <div class="guest-meta">
                   <span class="guest-name">@{{ g.nama }}</span>
-                  <span class="guest-date">{{ formatTanggal(g.tanggal) }}</span>
+                  <span class="guest-date">{{ formatTanggal(g.created_at) }}</span>
                 </div>
                 <p class="guest-msg">"{{ g.pesan }}"</p>
               </div>
